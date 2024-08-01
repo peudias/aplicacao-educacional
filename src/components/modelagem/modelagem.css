@@ -1,3 +1,18 @@
+.back-button-container {
+    display: flex;
+}
+
+.h2-body {
+    flex-grow: 1;
+}
+
+.back-button {
+    width: 80px;
+    font-size: 16px;
+    background-color: #678efe;
+    color: white;
+}
+
 .img-modelagem {
     width: 300px; /* Define a largura da imagem */
     height: auto; /* Mantém a proporção da imagem */

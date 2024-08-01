@@ -22,3 +22,7 @@ function removeImage() {
     imgContainer.innerHTML = '';
     document.getElementById('fileInput2').value = ''; // Reset the file input
 }
+
+function goBack(){
+    window.history.back();
+}

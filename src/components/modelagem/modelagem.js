@@ -4,6 +4,10 @@ let bodePhaseChart;
 let rootLocusChart;
 let selectedImage = 1;
 
+function goBack(){
+    window.history.back();
+}
+
 function selectImage(imageNumber) {
     selectedImage = imageNumber;
     console.log(imageNumber);
