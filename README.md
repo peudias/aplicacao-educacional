@@ -23,7 +23,7 @@ Este repositório contém os recursos associados ao artigo "Aplicação Educacio
 
 <div align="center">
     
-Acesse www.sinais.vercel.app
+Acesse sinais.vercel.app
 
 </div>
 
