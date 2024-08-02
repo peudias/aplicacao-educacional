@@ -17,7 +17,9 @@
 
 <div align="justify">
 
-Este repositório contém os recursos associados ao artigo "Aplicação Educacional para Simulação de Circuitos Dinâmicos", que apresenta uma metodologia dinâmica para compreensão de circuitos elétricos.
+Este repositório contém os recursos associados aos artigos ["Aplicação Educacional para Simulação de Circuitos Dinâmicos"](https://github.com/peudias/aplicacao-educacional/blob/main/article/Artigo_CSD___Modelagem_de_Circuitos__App_Web_.pdf) e ["Classificação de Umidade por Convolução"](https://github.com/peudias/aplicacao-educacional/blob/main/article), que apresentam metodologias dinâmicas para compreensão de temas do eixo de sistemas.
+
+Mais informações disponíveis na [Wiki](https://github.com/peudias/aplicacao-educacional/wiki) do projeto.
 
 </div>
 
