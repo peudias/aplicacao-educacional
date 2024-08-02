@@ -11,7 +11,7 @@
 <br>
 <h1 align="center">
     <a>
-        <img alt="Banner" title="#Banner" style="object-fit: fill; width: 961px, height:200px;" src="imgs/github-header-image.png"/>
+        <img alt="Banner" title="#Banner" style="object-fit: fill; width: 961px, height:200px;" src="imgs/github-header-image2.png"/>
     </a>
 </h1>
 
@@ -23,7 +23,7 @@ Este repositório contém os recursos associados ao artigo "Aplicação Educacio
 
 <div align="center">
     
-Acesse www.simularcircuitos.com.br
+Acesse www.sinais.vercel.app
 
 </div>
 
