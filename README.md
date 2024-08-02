@@ -39,11 +39,11 @@ Acesse [sinais.vercel.app](https://sinais.vercel.app/)
 
 <div align="justify">
 
-Este repositório apresenta o desenvolvimento de um website educacional interativo para duas aplicações: `simulação de circuitos dinâmicos` e `classificação de umidade por convolução`, utilizando tecnologias web modernas como HTML, CSS e JavaScript.
+Este repositório apresenta o desenvolvimento de um website educacional interativo para duas aplicações: `Simulação de Circuitos Dinâmicos` e `Classificação de Umidade por Convolução`, utilizando tecnologias web modernas como HTML, CSS e JavaScript.
 
-A plataforma permite aos usuários inserir valores de resistência, capacitância, condição inicial, escolher a organização do circuito e simular seu comportamento, gerando gráficos de degrau, diagrama de Bode e Lugar Geométrico das Raízes. Também permite, através de uma rede neural convolucional a classificação de imagens de concreto úmido, sendo uma proposta de prototipagem para uma abordagem mais profunda nos estudos de monitoramento de estado de saúde estrutural em construções civis.
+A plataforma permite aos usuários, a depender da aplicação escolhida, inserir valores de resistência, capacitância, condição inicial, escolher a organização do circuito e simular seu comportamento, gerando gráficos de degrau, diagrama de Bode e Lugar Geométrico das Raízes. Permite ainda, através de uma rede neural convolucional a classificação de imagens de concreto úmido, sendo uma proposta de prototipagem para uma abordagem mais profunda nos estudos de monitoramento de estado de saúde estrutural em construções civis.
 
-Destinado a estudantes e entusiastas, o site pode facilitar a visualização e compreensão dos conceitos de `controle de sistemas dinâmicos` e `sinais e sistemas lineares`, podendo se destacar como uma ferramenta promissora para o ensino e aprendizado em cursos de Engenharia de Computação.
+Destinado a estudantes e entusiastas, o site pode facilitar a visualização e compreensão dos conceitos de `Controle de Sistemas Dinâmicos` e de `Sinais e Sistemas Lineares`, podendo, destacar-se como uma ferramenta promissora para o ensino e aprendizado em cursos de Engenharia de Computação.
 
 </div>
 
