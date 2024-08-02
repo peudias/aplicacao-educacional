@@ -1,65 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<div>
+    <div>
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Aplicação Educacional</title>
+            <link rel="stylesheet" href="sinais.css" media="screen" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet" />
+        </head>
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Aplicação Educacional</title>
-        <link rel="stylesheet" href="sinais.css" media="screen" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet" />
-    </head>
+        <body>
+            <div class="container">
+                <header>
+                    <img src="images/editr-removebg.png" alt="img-header" class="img-modelagem" />
+                </header>
 
-    <body>
-        <div class="container">
-            <header>
-                <img src="images/editr-removebg.png" alt="img-header" class="img-modelagem" />
-            </header>
+                <br /><br />
 
-            <br /><br />
-
-            <!-- Título e Botão Voltar -->
-            <div class="back-button-container">
-                <h2 class="h2-body">Selecione a imagem desejada</h2>
-                <button onclick="goBack()" class="back-button">Voltar</button>
-            </div>
-
-
-            <!-- Aplicações -->
-            <div class="circuit-selection">
-                <div class="circuit-option">
-                    <input type="radio" id="circuit2" name="circuit" />
-                    <label class="label-select" for="circuit2" onclick="triggerFileInput('fileInput2')"><img src="images/add-camera-icon-icon-add.png"
-                            alt="Circuito 2" /></label>
-                    <input type="file" id="fileInput2" style="display: none;" onchange="handleFileInput(event)" />
+                <!-- Título e Botão Voltar -->
+                <div class="back-button-container">
+                    <h2 class="h2-body">Selecione a imagem desejada</h2>
+                    <button onclick="goBack()" class="back-button">Voltar</button>
                 </div>
-                <div id="uploadedImageContainer" class="uploaded-image-container"></div>
+
+                <!-- Aplicações -->
+                <div class="circuit-selection">
+                    <div class="circuit-option">
+                        <input type="radio" id="circuit2" name="circuit" />
+                        <label class="label-select" for="circuit2" onclick="triggerFileInput('fileInput2')"><img src="images/add-camera-icon-icon-add.png" alt="Circuito 2" /></label>
+                        <input type="file" id="fileInput2" style="display: none" onchange="handleFileInput(event)" />
+                    </div>
+                    <div id="uploadedImageContainer" class="uploaded-image-container"></div>
+                </div>
+                <!-- ... -->
             </div>
-            <!-- ... -->       
-        </div>
-    </body><br>
+        </body>
+        <br />
 
-    <footer>
-        <div class="footer">
-            <div class="row" align="center">
-                <ul>
-                    <h2>Contate-nos:</h2>
-                </ul>
+        <footer>
+            <div class="footer">
+                <div class="row" align="center">
+                    <ul>
+                        <h2>Contate-nos:</h2>
+                    </ul>
+                </div>
+
+                <div class="row" align="center">
+                    <ul>
+                        <a href="https://github.com/peudias/aplicacao-educacional"><i class="fa fa-github"> Aplicação Educacional</i></a>
+                    </ul>
+                </div>
+
+                <div class="row" align="center">CEFET Copyright © 2024 - Todos os direitos reservados</div>
             </div>
+        </footer>
 
-            <div class="row" align="center">
-                <ul>
-                    <a href="https://github.com/peudias/aplicacao-educacional"><i class="fa fa-github"> Aplicação Educacional</i></a>
-                </ul>
-            </div>
-
-            <div class="row" align="center">CEFET Copyright © 2024 - Todos os direitos reservados</div>
-        </div>
-    </footer>
-
-    <script src="sinais.js"></script>
-</div>
-
+        <script src="sinais.js"></script>
+    </div>
 </html>

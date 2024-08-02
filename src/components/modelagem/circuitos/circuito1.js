@@ -123,7 +123,7 @@ function plotBodeDiagram(resistencia, capacitancia, canvasIdMag, canvasIdPhase) 
                     title: {
                         display: true,
                         text: "Frequency (Hz)"
-                    },
+                    }
                     // ticks: {
                     //     callback: function (value, index, values) {
                     //         return Number(value).toExponential();

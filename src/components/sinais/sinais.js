@@ -7,7 +7,7 @@ function handleFileInput(event) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            const imgContainer = document.getElementById('uploadedImageContainer');
+            const imgContainer = document.getElementById("uploadedImageContainer");
             imgContainer.innerHTML = `
                 <img src="${e.target.result}" alt="Uploaded Image" class="uploaded-image" />
                 <button class="remove-image" onclick="removeImage()">x</button>
@@ -18,11 +18,11 @@ function handleFileInput(event) {
 }
 
 function removeImage() {
-    const imgContainer = document.getElementById('uploadedImageContainer');
-    imgContainer.innerHTML = '';
-    document.getElementById('fileInput2').value = ''; // Reset the file input
+    const imgContainer = document.getElementById("uploadedImageContainer");
+    imgContainer.innerHTML = "";
+    document.getElementById("fileInput2").value = ""; // Reset the file input
 }
 
-function goBack(){
+function goBack() {
     window.history.back();
 }

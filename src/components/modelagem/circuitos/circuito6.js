@@ -106,13 +106,15 @@ function plotBodeDiagram6(R1, C1, R2, C2, canvasIdMag, canvasIdPhase) {
         type: "line",
         data: {
             labels: bodeData.freqData,
-            datasets: [{
-                label: "Magnitude (dB)",
-                data: bodeData.magData,
-                fill: false,
-                borderColor: "red",
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: "Magnitude (dB)",
+                    data: bodeData.magData,
+                    fill: false,
+                    borderColor: "red",
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
             scales: {
@@ -138,13 +140,15 @@ function plotBodeDiagram6(R1, C1, R2, C2, canvasIdMag, canvasIdPhase) {
         type: "line",
         data: {
             labels: bodeData.freqData,
-            datasets: [{
-                label: "Phase (degrees)",
-                data: bodeData.phaseData,
-                fill: false,
-                borderColor: "blue",
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: "Phase (degrees)",
+                    data: bodeData.phaseData,
+                    fill: false,
+                    borderColor: "blue",
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
             scales: {

@@ -29,15 +29,16 @@ Acesse www.simularcircuitos.com.br
 
 ## Estrutura do Repositório
 
-- `article/`: Diretório contendo o artigo científico em formato LaTeX.
-- `src/`: Diretório com os scripts HTML, CSS e JavaScript usados para gerar os gráficos e realizar as análises.
-- `imgs/`: Diretório com as imagens utilizadas no projeto.
+-   `article/`: Diretório contendo o artigo científico em formato LaTeX.
+-   `src/`: Diretório com os scripts HTML, CSS e JavaScript usados para gerar os gráficos e realizar as análises.
+-   `imgs/`: Diretório com as imagens utilizadas no projeto.
 
 ## Resumo
 
 <div align="justify">
 
 Este trabalho apresenta o desenvolvimento de um website educacional interativo para simulação de circuitos dinâmicos, utilizando tecnologias web modernas como HTML, CSS e JavaScript. A plataforma permite aos usuários inserir valores de resistência, capacitância, condição inicial, escolher a organização do circuito e simular seu comportamento, gerando gráficos de degrau, diagrama de Bode e Lugar Geométrico das Raízes. Destinado a estudantes e entusiastas, o site pode facilitar a visualização e compreensão dos conceitos de controle de sistemas dinâmicos e se destaca como uma ferramenta promissora para o ensino e aprendizado em cursos de Engenharia de Computação.
+
 </div>
 
 <!-- ## Compilação e Execução  -->

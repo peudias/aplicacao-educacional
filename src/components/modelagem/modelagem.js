@@ -4,7 +4,7 @@ let bodePhaseChart;
 let rootLocusChart;
 let selectedImage = 1;
 
-function goBack(){
+function goBack() {
     window.history.back();
 }
 

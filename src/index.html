@@ -1,66 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<div>
+    <div>
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Aplicação Educacional</title>
+            <link rel="stylesheet" href="styles.css" media="screen" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet" />
+        </head>
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Aplicação Educacional</title>
-        <link rel="stylesheet" href="styles.css" media="screen" />
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet" />
-    </head>
+        <body>
+            <div class="container">
+                <header>
+                    <img src="images/header-removebg.png" alt="img-header" class="img-modelagem" />
+                </header>
 
-    <body>
-        <div class="container">
-            <header>
-                <img src="images/header-removebg.png" alt="img-header" class="img-modelagem" />
-            </header>
+                <br /><br />
 
-            <br /><br />
-
-            <!-- Aplicações -->
-            <h2 class="h2-body">Selecione a aplicação desejada</h2>
-            <div class="circuit-selection">
-                <!-- Linha 1 -->
-                <div class="circuit-option" onclick="redirectToPage('components/modelagem/modelagem.html')">
-                    <input type="radio" id="circuit1" name="circuit" checked="checked" />
-                    <label class="label-select" for="circuit1"><img src="images/modelagem-circuitos-invert.png"
-                            alt="Circuito 1" /></label>
-                    <!-- <span>Modelagem de circuitos</span> -->
+                <!-- Aplicações -->
+                <h2 class="h2-body">Selecione a aplicação desejada</h2>
+                <div class="circuit-selection">
+                    <!-- Linha 1 -->
+                    <div class="circuit-option" onclick="redirectToPage('components/modelagem/modelagem.html')">
+                        <input type="radio" id="circuit1" name="circuit" checked="checked" />
+                        <label class="label-select" for="circuit1"><img src="images/modelagem-circuitos-invert.png" alt="Circuito 1" /></label>
+                        <!-- <span>Modelagem de circuitos</span> -->
+                    </div>
+                    <div class="circuit-option" onclick="redirectToPage('components/sinais/sinais.html')">
+                        <input type="radio" id="circuit2" name="circuit" />
+                        <label class="label-select" for="circuit2"><img src="images/editr-removebg.png" alt="Circuito 2" /></label>
+                        <!-- <span>Restauração de fotos</span> -->
+                    </div>
                 </div>
-                <div class="circuit-option" onclick="redirectToPage('components/sinais/sinais.html')">
-                    <input type="radio" id="circuit2" name="circuit" />
-                    <label class="label-select" for="circuit2"><img src="images/editr-removebg.png"
-                            alt="Circuito 2" /></label>
-                    <!-- <span>Restauração de fotos</span> -->
+                <!-- ... -->
+            </div>
+        </body>
+        <br />
+
+        <footer>
+            <div class="footer">
+                <div class="row" align="center">
+                    <ul>
+                        <h2>Contate-nos:</h2>
+                    </ul>
                 </div>
+
+                <div class="row" align="center">
+                    <ul>
+                        <a href="https://github.com/peudias/aplicacao-educacional"><i class="fa fa-github"> Aplicação Educacional</i></a>
+                    </ul>
+                </div>
+
+                <div class="row" align="center">CEFET Copyright © 2024 - Todos os direitos reservados</div>
             </div>
-            <!-- ... -->          
-        </div>
-    </body><br>
+        </footer>
 
-    <footer>
-        <div class="footer">
-            <div class="row" align="center">
-                <ul>
-                    <h2>Contate-nos:</h2>
-                </ul>
-            </div>
-
-            <div class="row" align="center">
-                <ul>
-                    <a href="https://github.com/peudias/aplicacao-educacional"><i class="fa fa-github"> Aplicação Educacional</i></a>
-                </ul>
-            </div>
-
-            <div class="row" align="center">CEFET Copyright © 2024 - Todos os direitos reservados</div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-</div>
-
+        <script src="script.js"></script>
+    </div>
 </html>
