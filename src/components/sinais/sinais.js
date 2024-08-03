@@ -1,5 +1,6 @@
 let maxImages = 3;
 let currentImageCount = 0;
+let selectedImages = [];
 
 function triggerFileInput(id) {
     document.getElementById(id).click();
@@ -30,25 +31,44 @@ function handleFileInput(event) {
             removeButton.classList.add("remove-image");
             removeButton.textContent = "x";
             removeButton.onclick = function () {
-                removeImage(imgWrapper);
+                removeImage(imgWrapper, file);
             };
 
             imgWrapper.appendChild(imgElement);
             imgWrapper.appendChild(removeButton);
             imgContainer.appendChild(imgWrapper);
 
+            selectedImages.push(file);
             currentImageCount++;
         };
         reader.readAsDataURL(file);
     }
 }
 
-function removeImage(imageWrapper) {
+function removeImage(imageWrapper, file) {
     imageWrapper.remove();
     currentImageCount--;
     document.getElementById("fileInput2").value = "";
+
+    const index = selectedImages.indexOf(file);
+    if (index > -1) {
+        selectedImages.splice(index, 1);
+    }
 }
 
 function goBack() {
     window.history.back();
+}
+
+function simulate() {
+    if (selectedImages.length < 1) {
+        alert("Selecione pelo menos 1 imagem para classificar.");
+        return;
+    }
+
+    selectedImages.forEach((image, index) => {
+        console.log(`Imagem ${index + 1}: `, image);
+    });
+
+    alert("Classificação realizada com sucesso!");
 }
