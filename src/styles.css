@@ -80,15 +80,15 @@ button {
 
 .circuit-option {
     width: 500px;
-    height: 250px;
+    height: 300px;
     text-align: center;
     margin: 0px;
     /* Centraliza o conteúdo de cada opção de circuito */
 }
 
 .circuit-option img {
-    width: 80%;
-    height: 90%;
+    width: 70%;
+    height: 100%;
     object-fit: fit;
     margin: 10px 0px 10px 0px;
     border-radius: 10px;
