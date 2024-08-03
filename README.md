@@ -77,7 +77,7 @@ O modelo de artigo utilizado é o SBC Conferences Template disponível no Overle
   </tr>
   <tr>
     <td>João</td>
-    <td><a href="https://t.me/"><img align="center" height="20px" width="90px" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/> </td>
+    <td><a href="https://t.me/joaaogg"><img align="center" height="20px" width="90px" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/> </td>
     <td>Classificador de Umidade por Convolução</td>
   </tr>
   <tr>
