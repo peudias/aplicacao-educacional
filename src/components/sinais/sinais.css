@@ -13,44 +13,56 @@
     color: white;
 }
 
-.uploaded-image-container {
-    position: relative;
-    display: inline-block;
+.uploaded-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
-    text-align: center;
+    padding: 10px;
+    border-top: 2px solid #ccc;
+}
+
+.uploaded-image-container {
+    margin: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
 }
 
 .uploaded-image {
-    max-width: 300px;
+    max-width: 200px;
+    max-height: 150px;
+    width: auto;
     height: auto;
-    border: 2px solid #ccc;
-    border-radius: 5px;
+    display: block;
 }
 
 .remove-image {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #678efe;
+    top: -10px;
+    right: -10px;
+    background-color: #ff6666;
     color: white;
     border: none;
-    border-radius: 100%;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
-    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .img-modelagem {
-    width: 300px; /* Define a largura da imagem */
-    height: auto; /* Mantém a proporção da imagem */
-    margin: 0 auto; /* Centraliza a imagem horizontalmente */
-    display: block; /* Remove espaços em branco em torno da imagem */
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 body {
@@ -59,15 +71,6 @@ body {
     padding: 0;
     background-color: #f0f0f0;
 }
-
-/* .container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border: solid 1px #ddd;
-    margin-top: 20px;
-} */
 
 header {
     border-radius: 0 0 85% 85% / 30%;
@@ -80,7 +83,6 @@ header {
 .form-group {
     flex: 1;
     min-width: 0;
-    /* margin-bottom: 10px; */
 }
 
 label {
@@ -112,14 +114,16 @@ button {
     background-image: url("mountains-placeholder.png");
     /* Substitua pelo caminho da sua imagem */
     height: 200px;
-    /* Ajuste conforme a necessidade */
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .circuit-selection {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    grid-template-columns: repeat(1, 1fr);
     /* Agora cria duas colunas */
     grid-gap: 50px;
     /* Espaçamento entre as opções de circuito */
@@ -131,7 +135,6 @@ button {
     height: 250px;
     text-align: center;
     margin: 0px;
-    /* Centraliza o conteúdo de cada opção de circuito */
 }
 
 .circuit-option img {
@@ -250,37 +253,16 @@ input[type="radio"] {
     border-radius: 20px;
     padding: 1rem;
     margin-bottom: 1rem;
-    margin: 1rem;
+    margin: 0 auto;
     text-align: center;
     box-shadow: 0px 3px 10px -2px hsla(150, 5%, 65%, 0.5);
     position: relative;
 }
 
 input[type="radio"]:checked + label {
-    /* background: hsla(150, 75%, 50%, 1); */
     background: #678efe;
     color: hsla(215, 0%, 100%, 1);
-    /* box-shadow: 0px 0px 20px hsla(150, 100%, 50%, 0.75); */
     box-shadow: 0px 0px 20px #678efe;
-
-    /* &::after {
-        color: hsla(215, 5%, 25%, 1);
-        font-family: FontAwesome;
-        border: 2px solid hsla(150, 75%, 45%, 1);
-        content: "\f00c";
-        font-size: 24px;
-        position: absolute;
-        top: -25px;
-        left: 50%;
-        transform: translateX(-50%);
-        height: 50px;
-        width: 50px;
-        line-height: 50px;
-        text-align: center;
-        border-radius: 50%;
-        background: white;
-        box-shadow: 0px 2px 5px -2px hsla(0, 0%, 0%, 0.25);
-    } */
 }
 
 input[type="radio"]#control_05:checked + label {
@@ -304,7 +286,6 @@ p {
     --input-color: #99a3ba;
     --input-border: #678efe;
     --input-background: #fff;
-    /* --input-placeholder: #CBD1DC; */
     --input-placeholder: #555;
 
     --input-border-focus: #275efe;
@@ -321,7 +302,6 @@ p {
 .form-section {
     display: flex;
     gap: 16px;
-    /* Ajuste este valor conforme necessário para o espaçamento desejado */
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -395,9 +375,7 @@ p {
         padding: 8px 12px;
         font-size: 14px;
         line-height: 25px;
-        /* color: var(--group-color); */
         color: var(--input-placeholder);
-        /* background: var(--group-background); */
         background: #bdcaca;
         border: 1px solid var(--group-border);
         transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
@@ -451,23 +429,6 @@ html {
     margin: 0;
     box-sizing: border-box;
 }
-
-/* body {
-    height: 900px;
-} */
-
-/* header { */
-/* background: url("images/modelagem.png"); */
-/* text-align: center; */
-/* width: 100%; */
-/* height: 100%; */
-/* background-size: contain; */
-/* background-attachment: local; */
-/* position: relative; */
-/* overflow: hidden; */
-/* opacity: 0.8; */
-/* border-radius: 0 0 85% 85% / 30%; */
-/* } */
 
 header::before {
     content: "";
@@ -531,11 +492,6 @@ button:hover {
 
 /* FOOTER */
 
-/* body {
-    margin: 0;
-    overflow-x: hidden;
-} */
-
 .footer {
     background: #678efe;
     padding: 30px 0px;
@@ -594,10 +550,6 @@ button:hover {
 }
 
 @media only screen and (max-width: 1050px) {
-    /* header {
-        background-image: url("images/header6.png");
-    } */
-
     .container {
         width: 100%;
     }

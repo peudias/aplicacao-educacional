@@ -29,11 +29,13 @@
                 <div class="circuit-selection">
                     <div class="circuit-option">
                         <input type="radio" id="circuit2" name="circuit" />
-                        <label class="label-select" for="circuit2" onclick="triggerFileInput('fileInput2')"><img src="images/add-camera-icon-icon-add.png" alt="Circuito 2" /></label>
-                        <input type="file" id="fileInput2" style="display: none" onchange="handleFileInput(event)" />
+                        <label class="label-select" for="circuit2" onclick="triggerFileInput('fileInput2')">
+                            <img src="images/add-camera-icon-icon-add.png" alt="Circuito 2" />
+                        </label>
+                        <input type="file" id="fileInput2" style="display: none" onchange="handleFileInput(event)" multiple />
                     </div>
-                    <div id="uploadedImageContainer" class="uploaded-image-container"></div>
                 </div>
+                <div id="uploadedImageContainer" class="uploaded-images"></div>
                 <!-- ... -->
             </div>
         </body>
