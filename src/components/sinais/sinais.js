@@ -9,8 +9,8 @@ function triggerFileInput(id) {
 function handleFileInput(event) {
     const files = event.target.files;
 
-    if (currentImageCount + files.length >= maxImages) {
-        alert("Você só pode carregar até ${maxImages} imagens.");
+    if (currentImageCount + files.length > maxImages) {
+        alert(`Você só pode carregar até ${maxImages} imagens.`);
         event.target.value = "";
         return;
     }
@@ -49,7 +49,7 @@ function handleFileInput(event) {
                 currentImageCount++;
 
                 if (currentImageCount >= maxImages) {
-                    document.getElementById("fileInput2").disabled = true;
+                    //document.getElementById("fileInput2").disabled = true;
                 }
             };
             reader.readAsDataURL(file);
