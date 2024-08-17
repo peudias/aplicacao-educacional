@@ -1,0 +1,16 @@
+{
+  "name": "aplicacao-educacional",
+  "version": "1.0.0",
+  "description": "<div align=\"center\" style=\"display: inline_block\">\r   <img align=\"center\" alt=\"VS\" src=\"https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white\" />\r   <!-- <img align=\"center\" alt=\"Linux\" src=\"https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black\" /> -->\r   <img align=\"center\" alt=\"Html\" src=\"https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white\" />\r   <img align=\"center\" alt=\"Css\" src=\"https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white\" />\r   <img align=\"center\" alt=\"JavaScript\" src=\"https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black\" />\r   <!-- <img align=\"center\" alt=\"Overleaf\" src=\"https://img.shields.io/badge/Overleaf-47A141?style=for-the-badge&logo=Overleaf&logoColor=white\" /> -->\r   <img align=\"center\" alt=\"Latex\" src=\"https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white\" />\r </div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
