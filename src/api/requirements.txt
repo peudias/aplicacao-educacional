@@ -163,3 +163,7 @@ websocket-client==1.8.0
 Werkzeug==3.0.3
 wheel==0.43.0
 wrapt==1.16.0
+scikit-learn==1.5.1
+opencv-python
+opencv-python-headless
+Pillow

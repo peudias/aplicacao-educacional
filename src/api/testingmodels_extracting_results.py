@@ -18,8 +18,6 @@ import sys
 import inspect
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
-import matplotlib
 import keras as K
 import sklearn as sk
 import pickle
@@ -30,6 +28,7 @@ import json
 # Objects and methods
 # get_ipython().run_line_magic('matplotlib', 'inline')
 from PIL import Image, ImageOps, ImageEnhance, ImageFile
+import PIL.Image
 from numpy import random
 from IPython.display import SVG
 from distutils.version import LooseVersion as LV
@@ -236,329 +235,39 @@ print(list(test_generator.filenames))
 for pred, file in zip(predictions, test_generator.filenames):
     print(f"{file} ==> {pred}")
 
-exit(1)
-
-
-#print(prediction_percent)
 
-
-# print(sorted(prediction_percent)[:3])
-# print(sorted(prediction_percent)[-3:])
-# print(prediction_percent.mean())
-# np.median(prediction_percent)
-
-
-# for i in sorted(prediction_percent):
-#   print(i)
-
-# # Calcule a matriz de confusão
-# confusion = confusion_matrix(true_labels, predicted_labels[:-1])
-
-# # Normalize a matriz de confusão para ter valores entre 0 e 1
-# confusion = confusion.astype('float') / confusion.sum(axis=1)[:, np.newaxis]
+#Objetivo: Criar uma função que
 
-# # Crie o heatmap da matriz de confusão
-# plt.figure(figsize=(4, 3))
-# sns.heatmap(confusion, annot=True, fmt=".2f", cmap="Blues", cbar=False)
-# plt.xlabel("Predicted")
-# plt.ylabel("True")
-# plt.title("Confusion Matrix")
-# plt.xticks(np.arange(len(class_names)) + 0.5, class_names)
-# plt.yticks(np.arange(len(class_names)) + 0.5, class_names)
-# plt.show()
-
-# roc_auc = roc_auc_score(true_labels, predicted_labels[:-1])
-# auc_wb = balanced_accuracy_score(true_labels, predicted_labels[:-1])
-# print(f'ROC-AUC: {roc_auc:.5f}')
-# print(f'ROC-AUC: {auc_wb:.5f}')
+# Receba:
+    # O path de uma imagem
+    # um modelo carregado
 
-# class_report = classification_report(true_labels, predicted_labels[:-1])
-# print("Classification Report:\n", class_report)
+# Retorne:
+    # O nome da imagem carregada
+    # Se ela é wet, dry. 
+    # Porcentagem de chute.
 
-# print(wet_count)
-# print(dry_count)
-
-# # curva ROC
-# fpr, tpr, thresholds = roc_curve(true_labels, predicted_labels[:-1])
-# roc_auc = roc_auc_score(true_labels, predicted_labels[:-1]) #ROC-AUC
 
-# # ROC-AUC balanced:
-# class_w = compute_class_weight('balanced', classes=np.unique(true_labels), y = true_labels)
-# weighted_auc = roc_auc_score(true_labels, predicted_labels[:-1], sample_weight=class_w[true_labels])
 
-# print(f'ROC-AUC: {roc_auc:.5f}')
-# print(f'ROC-AUCwb: {weighted_auc:.5f}')
+def classificadora(path, model):
 
-# plt.figure(figsize=(4, 3))
-# plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC-AUC = {roc_auc:.11f}')
-# plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-# plt.xlim([0.0, 1.0])
-# plt.ylim([0.0, 1.05])
-# plt.xlabel('False Positive Rate')
-# plt.ylabel('True Positive Rate')
-# plt.title('ROC curve')
-# plt.legend(loc='lower right')
-# plt.show()
+    resize_output = path[:-4] + '_128x128_' + path[-4:]
+    with Image.open(path) as picture:
+        resized_pic = picture.resize((128, 128), Image.LANCZOS)
+        resized_pic.save(resize_output)
 
-# fig, axes = plt.subplots(3, 5, figsize=(12, 6))
-# axes = axes.ravel()
-# predicted_classes = np.argmax(predictions, axis=1)
-# class_labels = list(test_generator.class_indices.keys())
-# file_names = test_generator.filenames[:]
+    sample = img_to_array(load_img(path=resize_output, color_mode="rgb", target_size=None))
+    processing_img = np.expand_dims(sample, axis=0)
+    processed_image = processing_img/255
 
-# for i in range(10):
-#     index = random.randint(0, 200) + i  # Starting from position
-#     axes[i].imshow(test_generator[index][0][0])
-#     predicted_label = class_labels[predicted_classes[index]]
-#     true_label = class_labels[true_labels[index]]
-#     confidence = predictions[index][predicted_classes[index]] * 100
-#     if confidence < (threshold*100):
-#         axes[i].set_title("Predicted: {} \nConfidence: ({:.2f}%) \nTrue: {}\nlabel: {}".format("dry", confidence, true_label, file_names[index][4:]), fontsize=8)
-#         axes[i].axis('off')
-
-
-
-#     else:
-#         axes[i].set_title("Predicted: {} \nConfidence: ({:.2f}%) \nTrue: {}\nlabel: {} ".format("wet", confidence, true_label, file_names[index][4:]), fontsize=8)
-#         axes[i].axis('off')
-
-# plt.tight_layout()
-# plt.show()
-
-# print("Valor mínimo:", min(prediction_percent))
-# print("Threshold*100:", threshold * 100)
-# print("Valor máximo:", max(prediction_percent))
-
-# # Criar o boxplot
-# fig, ax = plt.subplots()
-# sns.boxplot(prediction_percent, ax=ax)
-
-# # Obter os valores dos outliers
-# outliers = []
-# for line in ax.lines:
-#     if line.get_linestyle() == '':
-#         outliers.extend(line.get_ydata())
-
-# if outliers:
-#     print("Outliers:", np.array(outliers))
-# else:
-#     print("Nenhum outlier encontrado")
-
-# # Mostrar o gráfico
-# plt.title('Boxplot dos Dados')
-# plt.xlabel('Categoria')
-# plt.ylabel('Valores')
-# plt.show()
-
-# """## Plotando curvas de treinamento"""
-
-# filters = loaded_model.layers[0].get_weights()[0]
-
-# from skimage.color import rgb2gray
-# filters = loaded_model.weights[0].numpy()
-# filters_norm= (filters - np.min(filters)) / (np.max(filters) - np.min(filters))
-# fig, axes = plt.subplots(4, 4, figsize=(6, 6))
-# for i, ax in enumerate(axes.flatten()):
-#   ax.imshow(np.squeeze(filters_norm[:, :, :, i]), cmap='gray')
-#   ax.set_yticks([])
-#   ax.set_xticks([])
-
-# #feature
-
-# filters = loaded_model.layers[0].get_weights()[0]
-
-# filters_gray = np.mean(filters, axis=2)
-# fig.subplots_adjust(hspace=0.1, wspace=0.1)
-
-# filters_norm = (filters_gray - np.min(filters_gray)) / (np.max(filters_gray) - np.min(filters_gray))
-
-# fig, axes = plt.subplots(4, 4, figsize=(6, 6))
-# for i, ax in enumerate(axes.flatten()):
-#     ax.imshow(filters_norm[:, :, i], cmap='gray')
-#     ax.set_yticks([])
-#     ax.set_xticks([])
-
-# plt.show()
-
-# #features escala de cinza
-# inp = loaded_model.layers[0].input
-# outs = [layer.output for layer in loaded_model.layers]
-
-# layerized_model = tf.keras.models.Model(inp, outs)
-# Omat = layerized_model.predict(test_generator)
-
-# fig, axes = plt.subplots(4, 4, figsize=(4, 4))
-
-# for i, ax in enumerate(axes.flatten()):
-#   ax.imshow(np.squeeze(Omat[0][0, :, :, i]), cmap='gray')
-#   ax.set_yticks([])
-#   ax.set_xticks([])
-
-# fig, axes = plt.subplots(4, 4, figsize=(4, 4))
-
-# for i, ax in enumerate(axes.flatten()):
-#  ax.imshow(np.squeeze(Omat[1][0, :, :, i]), cmap='gray')
-#  ax.set_yticks([])
-#  ax.set_xticks([])
-
-# #plota em portugues
-# fig, axes = plt.subplots(6, 5, figsize=(8, 8))
-# axes = axes.ravel()
-
-# for i in range(30):
-#     axes[i].imshow(test_generator[i][0][0])
-#     predicted_label = class_labels[predicted_classes[i]]
-#     true_label = class_labels[true_labels[i]]
-#     confidence = predictions[i][predicted_classes[i]] * 100
-#     if confidence<50:
-#          axes[i].set_title("Predição: {} \nConfiance: ({:.2f}%)".format("wet", confidence), fontsize=8)
-#          axes[i].axis('off')
-#     else:
-#         axes[i].set_title("Predição: {} \nConfiance: ({:.2f}%)".format("dry", confidence), fontsize=8)
-#         axes[i].axis('off')
-# plt.tight_layout()
-# plt.show()
-
-# #plota em ingles
-# fig, axes = plt.subplots(6, 5, figsize=(8, 8))
-# axes = axes.ravel()
-
-# for i in range(30):
-#     axes[i].imshow(test_generator[i][0][0])
-#     predicted_label = class_labels[predicted_classes[i]]
-#     true_label = class_labels[true_labels[i]]
-#     confidence = predictions[i][predicted_classes[i]] * 100
-#     if confidence<50:
-#          axes[i].set_title("Predição: {} \nConfiance: ({:.2f}%)".format("wet", confidence), fontsize=8)
-#          axes[i].axis('off')
-#     else:
-#         axes[i].set_title("Predição: {} \nConfiance: ({:.2f}%)".format("dry", confidence), fontsize=8)
-#         axes[i].axis('off')
-# plt.tight_layout()
-# plt.show()
-
-# img_path = 'C:\\Users\\joaog\\Desktop\\ALL\\MoistClassifier\\MoistClassifier\\concrete_dataset\\test\\wet\\wet1796.jpg'
-# img = Image.open(img_path)
-
-# img_flipped = img.transpose(method=Image.FLIP_LEFT_RIGHT)
-# img_rotated = img.rotate(45)
-
-# width, height = img.size
-# new_width, new_height = int(width * 0.6), int(height * 0.4)
-
-# # Redimensionando com rescale
-# img_rescaled = img.resize((new_width, new_height))
-
-# # Cria uma figura com dois subplots
-# fig, axes = plt.subplots(nrows=2, ncols=2)
-
-# # Plota a imagem original no primeiro subplot
-# axes[0,0].imshow(np.asarray(img))
-# axes[0,0].set_title("Original", fontsize=8)
-
-# # Plota a imagem modificada pelo data augmentation no segundo subplot
-# axes[0,1].imshow(np.asarray(img_flipped))
-# axes[0,1].set_title("Flip", fontsize=8)
-
-# # Plota a imagem modificada pelo data augmentation no terceiro subplot
-# axes[1,0].imshow(np.asarray(img_rotated))
-# axes[1,0].set_title("Rotation", fontsize=8)
-
-# # Plota a imagem original no primeiro subplot
-# axes[1,1].imshow(np.asarray(img_rescaled))
-# axes[1,1].set_title("Rescale", fontsize=8)
-
-# plt.subplots_adjust(wspace=0.1, hspace=0.05)
-# # Remove as marcas de ticks dos subplots
-# for ax in axes.flat:
-#     ax.set_xticks([])
-#     ax.set_yticks([])
-
-# # Exibe a figura
-# plt.show()
-
-# path = 'C:\\Users\\joaog\\Desktop\\ALL\\MoistClassifier\\MoistClassifier\\concrete_dataset\\test\\wet'
-# fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(4, 3))
-# ax = ax.flatten()
-# for i, img in enumerate(os.listdir(path)[:4]):
-#   img_path = os.path.join(path, img)
-#   if os.path.isfile(img_path):
-#     image = Image.open(img_path)
-#     image.thumbnail((100, 100))
-#     ax[i].imshow(image)
-# plt.tight_layout()
-# plt.show()
-
-# path = 'C:\\Users\\joaog\\Desktop\\ALL\\MoistClassifier\\MoistClassifier\\concrete_dataset\\test\\dry'
-# fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(4, 3))
-# ax = ax.flatten()
-# for i, img in enumerate(os.listdir(path)[:4]):
-#   img_path = os.path.join(path, img)
-#   if os.path.isfile(img_path):
-#     image = Image.open(img_path)
-#     image.thumbnail((100, 100))
-#     ax[i].imshow(image)
-# plt.tight_layout()
-# plt.show()
-
-# from PIL import Image, ImageEnhance
-
-
-# img_path = 'C:\\Users\\joaog\\Desktop\\ALL\\MoistClassifier\\MoistClassifier\\concrete_dataset\\test\\wet\\wet1796.jpg'
-# img = Image.open(img_path)
-
-# img_flipped = img.transpose(method=Image.FLIP_LEFT_RIGHT)
-# img_rotated = img.rotate(45)
-
-# width, height = img.size
-# new_width, new_height = int(width * 0.6), int(height * 0.4)
-
-# # Redimensionando com rescale
-# img_rescaled = img.resize((new_width, new_height))
-
-
-# enhanced_flipped = ImageEnhance.Sharpness(img_flipped)
-# enhanced_rotated = ImageEnhance.Sharpness(img_flipped)
-# enhanced_rescaled = ImageEnhance.Sharpness(img_rescaled)
-# enhanced_img = ImageEnhance.Sharpness(img)
-
-
-# sharpness_factor = 4.0
-
-# # Cria uma figura com dois subplots
-# fig, axes = plt.subplots(nrows=2, ncols=2)
-
-# # Plota a imagem original no primeiro subplot
-# axes[0,0].imshow(np.asarray(enhanced_img.enhance(sharpness_factor)))
-# axes[0,0].set_title("Original", fontsize=8)
-
-# # Plota a imagem modificada pelo data augmentation no segundo subplot
-# axes[0,1].imshow(np.asarray(enhanced_flipped.enhance(sharpness_factor)))
-# axes[0,1].set_title("Flip", fontsize=8)
-
-# # Plota a imagem modificada pelo data augmentation no terceiro subplot
-# axes[1,0].imshow(np.asarray(enhanced_rotated.enhance(sharpness_factor)))
-# axes[1,0].set_title("Rotation", fontsize=8)
-
-# # Plota a imagem original no primeiro subplot
-# axes[1,1].imshow(np.asarray(enhanced_rescaled.enhance(sharpness_factor)))
-# axes[1,1].set_title("Rescale", fontsize=8)
-
-# plt.subplots_adjust(wspace=0.1, hspace=0.05)
-# # Remove as marcas de ticks dos subplots
-# for ax in axes.flat:
-#     ax.set_xticks([])
-#     ax.set_yticks([])
-
-# # Exibe a figura
-# plt.show()
-
-# import gc
-# import torch
-# from torch import nn, optim, zeros
-# A = zeros(30000000000, dtype=torch.int8)
-# B = zeros(30000000000, dtype=torch.int8)
-# C = zeros(30000000000, dtype=torch.int8)
-# D = zeros(30000000000, dtype=torch.int8)
-# E = zeros(30000000000, dtype=torch.int8)
-# F = zeros(30000000000, dtype=torch.int8)
+    prediction = model.predict(processed_image)
+
+    return [path, prediction[0][0], "wet" if (prediction[0] > threshold)[0] else "dry" ]
+
+print(classificadora('./imgs-api/test/wet/istockphoto-183808583-612x612.jpg',model))
+
+
+
+
+
+
