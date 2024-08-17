@@ -37,6 +37,7 @@ from sklearn.model_selection import train_test_split
 from shutil import copyfile
 from datetime import datetime
 from tensorflow.python.framework import ops
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_recall_fscore_support, confusion_matrix, classification_report, roc_curve, roc_auc_score, balanced_accuracy_score
 from sklearn.utils.class_weight import compute_class_weight
@@ -74,8 +75,8 @@ print('Versão da Linguagem Python Usada Neste Jupyter Notebook:', python_versio
 #!unzip /content/drive/MyDrive/Imagens128.zip -d dataset/
 
 # Path to directories with dry and wet images division
-base_dir1 = '../../imgs'
-base_dir2 = '../../imgs'
+base_dir1 = './imgs-api'
+base_dir2 = './imgs-api'
 
 # train, validation and test sub-directories
 train_dir = os.path.join(base_dir1, 'train')
@@ -84,7 +85,7 @@ test_dir = os.path.join(base_dir1, 'test')
 #test_dir = os.path.join(base_dir2, 'test_holdout128')
 print(base_dir1)
 
-exit(1)
+# exit(1)
 
 """# Filtering Definition"""
 
@@ -143,121 +144,6 @@ unique, counts = np.unique(class_labels, return_counts=True)
 # Create a dictionary mapping class names to their respective counts
 class_counts = {class_name: counts[idx] for class_name, idx in class_indices.items()}
 
-print("Number of images per class:")
-for class_name, count in class_counts.items():
-    if class_name == 'dry':
-      dry_count = count
-    else:
-      wet_count = count
-
-    print(f"{class_name}: {count}")
-
-print(dry_count)
-print(wet_count)
-
-"""# Layers Of Model"""
-
-model = Sequential()
-
-# Primeira parte com convoluções e maxpooling = CAMADA 1 - LAYER 0
-model.add(Conv2D(32,(3,3), input_shape=(128,128,3)))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-
-# Segunda parte com convoluções e maxpooling = CAMADA 2 - LAYER 1
-model.add(Conv2D(32,(3,3)))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-
-
-#Terceira parte com convoluções e maxpooling= CAMADA 3 - LAYER 2
-model.add(Conv2D(32, (3,3)))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-
-model.add(Flatten())
-model.add(Dense(units = 128, activation = 'relu')) # altere os neuronios
-model.add(Dense(units = 128, activation = 'relu')) # altere os neuronios
-model.add(Dense(units = 1, activation = 'sigmoid'))
-
-import tensorflow as tf
-optimizer = Adam(learning_rate=0.004)
-model.compile(loss='binary_crossentropy', metrics=['accuracy'])
-
-gpus = tf.config.list_physical_devices('GPU')
-if gpus:
-    try:
-        # Restrict TensorFlow to only use the first GPU
-        tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
-        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
-        print(f'Physical GPUs: {gpus}, Logical GPUs: {logical_gpus}')
-    except RuntimeError as e:
-        print(e)
-else:
-    print('Nenhuma GPU detectada.')
-
-"""# Train Model"""
-
-with tf.device('/device:GPU:0'):
-    history_list = []
-    accuracy_list = []
-    loss_list = []
-    val_accuracy_list = []
-    val_loss_list = []
-
-    check_point_flag_val_loss = tf.keras.callbacks.ModelCheckpoint(
-        '/content/bests/Models/h5/Model15_val_loss.h5',
-        monitor='val_loss', save_best_only = False,
-        mode = 'min', patience = 100
-        )
-
-    Early_stopping = callbacks.EarlyStopping(
-        monitor='val_loss', patience=100
-        )
-
-
-    history = model.fit(
-        train_generator,
-        epochs = 1000,
-        validation_data=validation_generator,
-        callbacks = [check_point_flag_val_loss, Early_stopping]
-    )
-
-    accuracy_list.append(history.history['accuracy'])
-    loss_list.append(history.history['loss'])
-    val_accuracy_list.append(history.history['val_accuracy'])
-    val_loss_list.append(history.history['val_loss'])
-
-def transfer_model_to_json():
-    checkpoint_path_json = '/content/bests/Models/h5/model15.json'
-    model_to_json = model.to_json()
-
-    with open(checkpoint_path_json, 'w') as my_jsonmodel:
-        my_jsonmodel.write(model_to_json)
-    print("modelo foi salvo como json")
-
-    my_jsonmodel.close()
-
-
-transfer_model_to_json()
-# model.save('drive/MyDrive/Models/h5/model.weights13.h5')
-# model.save_weights('drive/MyDrive/Models/h5/model.weights13.h5')
-
-'''if __name__ == "__main__":
-    if not pyuac.isUserAdmin():
-        print("Re-launching as admin!")
-        pyuac.runAsAdmin(transfer_model_to_json())
-        pyuac.runAsAdmin(model.save('../models\h5\model.weights8.h5'))
-        pyuac.runAsAdmin(model.save_weights('..\models\h5\model.weights8.h5'))
-    else:
-        main(transfer_model_to_json())
-        main(model.save('..\models\h5\model.weights8.h5'))
-        main(model.save_weights('..\models\h5\model.weights8.h5'))
-
-'''
-
 """# Loading Models
 
 ## Função para lidar com imagens corrompidas
@@ -278,25 +164,51 @@ def iterator_scanner(img):
 #aa
 """## Reading weights and json model files"""
 
-json_file = open('/content/drive/MyDrive/Models/json/M2.json','r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
+# json_file = open('./models/M2.json','r')
+# loaded_model_json = json_file.read()
+# json_file.close()
+# loaded_model = model_from_json(loaded_model_json)
+# print(loaded_model)
 
-loaded_model.load_weights('/content/drive/MyDrive/Models/h5/M1_weights_epoch_90.h5')
+# Leu o arquivo com os pesos iniciais do modelo:
+model = load_model('./models/M1_weights_epoch_90.h5')
 print('Loaded model from disk')
 
-loaded_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+#Compilou o modelo:
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-score = loaded_model.evaluate(test_generator)
+
+def classificadora(img_path, model):
+    img = load_img(img_path, target_size=target_size)
+    img_array = img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)
+    img_array = img_array / 255.0
+    return img_array
+
+#Fez os testes
+score = model.evaluate(test_generator)
 
 
-print("{}: {}".format(loaded_model.metrics_names[1],score[1]*100))
-print("{}: {}".format(loaded_model.metrics_names[0],score[0]*100))
+print("{}: {}".format(model.metrics_names[1],score[1]*100))
+print("{}: {}".format(model.metrics_names[0],score[0]*100))
 
-loaded_model.summary()
 
-predictions = loaded_model.predict(test_generator)
+
+
+#model.summary()
+
+#Lista de chutes:
+predictions = model.predict(test_generator)
+
+threshold=0.877976
+prediction_percent=(predictions*100).round(8)
+predicted_labels = (predictions > threshold).astype(int) # Converter as previsões em rótulos (classes)
+
+true_labels = test_generator.classes# Obter os rótulos verdadeiros do conjunto de teste
+true_labels = true_labels[:-1]
+class_names = list(test_generator.class_indices.keys())
+
+#print(predicted_labels)
 
 #aaa
 
@@ -314,9 +226,19 @@ predicted_labels = (predictions > threshold).astype(int) # Converter as previsõ
 true_labels = test_generator.classes# Obter os rótulos verdadeiros do conjunto de teste
 true_labels = true_labels[:-1]
 class_names = list(test_generator.class_indices.keys())
-print(class_names)
 
-print(true_labels)
+print(predictions)
+print(test_generator.filenames)
+
+
+print(list(test_generator.filenames))
+
+for pred, file in zip(predictions, test_generator.filenames):
+    print(f"{file} ==> {pred}")
+
+exit(1)
+
+
 #print(prediction_percent)
 
 
