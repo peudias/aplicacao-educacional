@@ -83,11 +83,13 @@ async function simulate() {
     }
 
     const formData = new FormData();
-    selectedImages.forEach(image => {
-        formData.append("images", image);
+    selectedImages.forEach((image, index) => {
+        console.log(`Adicionando imagem ${index + 1}: ${image.name}`);
+        formData.append(`images`, image);
     });
 
     try {
+        document.getElementById("simulateButton").disabled = true;
         const response = await fetch("http://localhost:3000/upload", {
             method: "POST",
             body: formData
@@ -95,17 +97,28 @@ async function simulate() {
 
         if (response.ok) {
             alert("Imagens carregadas com sucesso!");
+            resetUpload();
         } else {
             alert("Erro ao carregar imagens.");
         }
     } catch (error) {
         console.error("Erro:", error);
         alert("Erro ao carregar imagens.");
+    } finally {
+        document.getElementById("simulateButton").disabled = false;
     }
 
     // selectedImages.forEach((image, index) => {
     //     console.log(`Imagem ${index + 1}: `, image);
     //});
 
-    alert("Classificação realizada com sucesso!");
+    // alert("Classificação realizada com sucesso!");
+}
+
+function resetUpload() {
+    selectedImages = [];
+    currentImageCount = 0;
+    document.getElementById("uploadedImageContainer").innerHTML = "";
+    document.getElementById("fileInput2").value = "";
+    document.getElementById("fileInput2").disabled = false;
 }
