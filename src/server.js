@@ -31,6 +31,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname)));
 
@@ -46,6 +47,6 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.listen(3000, () => {
-    console.log("Server at port 3000: http://localhost:3000/");
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
