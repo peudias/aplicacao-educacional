@@ -11,5 +11,14 @@
             "src": "/(.*)",
             "dest": "/src/server.js"
         }
+    ],
+    "builds": [
+        {
+            "src": "install-python-deps.sh",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "public"
+            }
+        }
     ]
 }
