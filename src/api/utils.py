@@ -25,7 +25,7 @@ print('Loaded model from disk')
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
-def classificadora(path, model, dir):
+def classifier(path, model, dir):
     if dir == False:
         resize_output = path[:-4] + '_128x128_' + path[-4:]
         with Image.open(path) as picture:
@@ -41,8 +41,8 @@ def classificadora(path, model, dir):
         return [resize_output, prediction[0][0], "wet" if (prediction[0] > threshold)[0] else "dry" ]
     
     else:
-        classificados = {}
-        classificados['attributes'] = {}
+        classified = {}
+        classified['attributes'] = {}
         counter = 0
         for filename in os.listdir(path):
             counter += 1
@@ -63,18 +63,8 @@ def classificadora(path, model, dir):
                 file['classified_as'] = "wet" if (prediction[0] > threshold)[0] else "dry"
                 file['score'] = str(prediction[0][0])
 
-                classificados['attributes'][f'{counter}'] = file 
+                classified['attributes'][f'{counter}'] = file 
 
-    output_path = r'./json/classificados.json'
+    output_path = r'./json/classified.json'
     with open (output_path, 'w') as filepath:
-        json.dump(classificados, filepath, indent=4)
-
-classificadora('./imgs-api/test/wet/', model, True)
-
-#Função:
-    #Recebe:
-        #uma lista com todos os arquivos
-    
-    #Cria:
-        #um diretório com todos os arquivos
-        
+        json.dump(classified, filepath, indent=4)
