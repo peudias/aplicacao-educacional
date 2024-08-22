@@ -185,23 +185,10 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 #     return img_array
 
 #Fez os testes
-score = model.evaluate(test_generator)
-
-
-print("{}: {}".format(model.metrics_names[1],score[1]*100))
-print("{}: {}".format(model.metrics_names[0],score[0]*100))
-
-
-
-
-#model.summary()
-
-#Lista de chutes:
-predictions = model.predict(test_generator)
 
 threshold=0.877976
-prediction_percent=(predictions*100).round(8)
-predicted_labels = (predictions > threshold).astype(int) # Converter as previsões em rótulos (classes)
+# prediction_percent=(predictions*100).round(8)
+# predicted_labels = (predictions > threshold).astype(int) # Converter as previsões em rótulos (classes)
 
 true_labels = test_generator.classes# Obter os rótulos verdadeiros do conjunto de teste
 true_labels = true_labels[:-1]
@@ -219,21 +206,6 @@ class_names = list(test_generator.class_indices.keys())
 #threshold=0.50392
 threshold=0.877976
 
-#threshold=0.497
-prediction_percent=(predictions*100).round(8)
-predicted_labels = (predictions > threshold).astype(int) # Converter as previsões em rótulos (classes)
-true_labels = test_generator.classes# Obter os rótulos verdadeiros do conjunto de teste
-true_labels = true_labels[:-1]
-class_names = list(test_generator.class_indices.keys())
-
-print(predictions)
-print(test_generator.filenames)
-
-
-print(list(test_generator.filenames))
-
-for pred, file in zip(predictions, test_generator.filenames):
-    print(f"{file} ==> {pred}")
 
 
 #Objetivo: Criar uma função que
@@ -262,7 +234,7 @@ def classificadora(path, model):
 
     prediction = model.predict(processed_image)
 
-    return [path, prediction[0][0], "wet" if (prediction[0] > threshold)[0] else "dry" ]
+    return [resize_output, prediction[0][0], "wet" if (prediction[0] > threshold)[0] else "dry" ]
 
 print(classificadora('./imgs-api/test/wet/istockphoto-183808583-612x612.jpg',model))
 
