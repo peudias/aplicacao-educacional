@@ -1,0 +1,29 @@
+{
+    "attributes": {
+        "3": {
+            "name": "istockphoto-183808583-612x612.jpg",
+            "classified_as": "dry",
+            "score": "2.3760836e-06"
+        },
+        "4": {
+            "name": "istockphoto-183808583-612x612_128x128_.jpg",
+            "classified_as": "dry",
+            "score": "2.3760836e-06"
+        },
+        "5": {
+            "name": "wet_2.jpg",
+            "classified_as": "wet",
+            "score": "0.99999267"
+        },
+        "6": {
+            "name": "wet_3.jpg",
+            "classified_as": "wet",
+            "score": "1.0"
+        },
+        "7": {
+            "name": "wet_4.jpg",
+            "classified_as": "wet",
+            "score": "1.0"
+        }
+    }
+}
