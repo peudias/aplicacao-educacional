@@ -69,7 +69,7 @@ def classificadora(path, model, dir):
     with open (output_path, 'w') as filepath:
         json.dump(classificados, filepath, indent=4)
 
-classificadora('./imgs-api/test/wet/', model, True)
+classificadora('./img/', model, True)
 
 #Função:
     #Recebe:
