@@ -1,19 +1,19 @@
 {
     "attributes": {
         "1": {
-            "name": "1724287486206-9c3e63f30aaf4ecc.jpg",
+            "name": "1724293026749baa4.jpg",
+            "classified_as": "dry",
+            "score": "2.3590578e-06"
+        },
+        "2": {
+            "name": "17242930267507522.jpg",
             "classified_as": "dry",
             "score": "2.1505445e-10"
         },
-        "2": {
-            "name": "1724287486206-edd012e03864188c.jpg",
+        "3": {
+            "name": "1724293026751e0a8.jpg",
             "classified_as": "dry",
             "score": "2.0860214e-05"
-        },
-        "3": {
-            "name": "1724287486207-b15c5ef88f347b5a.jpg",
-            "classified_as": "dry",
-            "score": "2.3590578e-06"
         }
     }
 }
