@@ -1,5 +1,18 @@
 {
     "version": 2,
-    "builds": [{ "src": "src/server.js", "use": "@vercel/node" }],
-    "routes": [{ "src": "/(.*)", "dest": "src/server.js" }]
+    "builds": [
+        {
+            "src": "src/api/requirements.txt",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "src/api/index.py"
+        }
+    ],
+    "python": {
+        "version": "3.10"
+    }
 }
