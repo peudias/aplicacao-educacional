@@ -1,19 +1,9 @@
 {
     "attributes": {
         "1": {
-            "name": "1724293026749baa4.jpg",
-            "classified_as": "dry",
-            "score": "2.3590578e-06"
-        },
-        "2": {
-            "name": "17242930267507522.jpg",
-            "classified_as": "dry",
-            "score": "2.1505445e-10"
-        },
-        "3": {
-            "name": "1724293026751e0a8.jpg",
-            "classified_as": "dry",
-            "score": "2.0860214e-05"
+            "name": "1724448034108349d.jpg",
+            "classified_as": "wet",
+            "score": "0.99999267"
         }
     }
 }

@@ -38,8 +38,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname)));
+app.use("/src/api/img", express.static(path.join(__dirname, "api", "img")));
 
-app.post("/upload", upload.array("images", 3), (req, res) => {
+app.post("/upload", upload.array("images", 3), async (req, res) => {
     console.log("Arquivos recebidos:", req.files);
     if (!req.files || req.files.length === 0) {
         return res.status(400).json({ message: "Nenhum arquivo foi carregado." });
@@ -51,11 +52,11 @@ app.post("/upload", upload.array("images", 3), (req, res) => {
 
     // Corrige o caminho do script Python
     const pythonScriptPath = path.normalize(path.resolve(__dirname, "..", "src", "api", "pre_load_stuff.py"));
-    const pythonCommand = `python3 "${pythonScriptPath}"`;
+    const pythonCommand = `py "${pythonScriptPath}"`;
 
     console.log("Comando Python:", pythonCommand);
 
-    exec(pythonCommand, (error, stdout, stderr) => {
+    exec(pythonCommand, async (error, stdout, stderr) => {
         if (error) {
             console.error(`Erro ao executar o script Python: ${error.message}`);
             console.error(`Saída do stderr: ${stderr}`);
@@ -66,7 +67,16 @@ app.post("/upload", upload.array("images", 3), (req, res) => {
             console.error(`Saída do stderr: ${stderr}`);
         }
 
-        res.status(200).json({ message: "Imagens carregadas com sucesso!" });
+        try {
+            const jsonFilePath = path.join(__dirname, "api", "json", "classificados.json");
+
+            const data = await fs.readFile(jsonFilePath, "utf8");
+
+            res.status(200).json(JSON.parse(data));
+        } catch (err) {
+            console.error("Erro ao ler o arquivo JSON:", err);
+            res.status(500).json({ message: "Erro ao ler o arquivo JSON." });
+        }
     });
 });
 

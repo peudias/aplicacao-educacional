@@ -20,7 +20,6 @@ function handleFileInput(event) {
             return;
         }
 
-        // const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
@@ -60,7 +59,6 @@ function handleFileInput(event) {
 function removeImage(imageWrapper, file) {
     imageWrapper.remove();
     currentImageCount--;
-    // document.getElementById("fileInput2").value = "";
 
     if (currentImageCount < maxImages) {
         document.getElementById("fileInput2").disabled = false;
@@ -97,22 +95,18 @@ async function simulate() {
 
         if (response.ok) {
             alert("Imagens carregadas com sucesso!");
+            const result = await response.json();
+            displayResult(result);
             resetUpload();
         } else {
-            alert("Erro ao carregar imagens.");
+            alert("Erro ao carregar imagens!");
         }
     } catch (error) {
         console.error("Erro:", error);
-        alert("Erro ao carregar imagens.");
+        alert("Erro ao carregar imagens?");
     } finally {
         document.getElementById("simulateButton").disabled = false;
     }
-
-    // selectedImages.forEach((image, index) => {
-    //     console.log(`Imagem ${index + 1}: `, image);
-    //});
-
-    // alert("Classificação realizada com sucesso!");
 }
 
 function resetUpload() {
@@ -121,4 +115,46 @@ function resetUpload() {
     document.getElementById("uploadedImageContainer").innerHTML = "";
     document.getElementById("fileInput2").value = "";
     document.getElementById("fileInput2").disabled = false;
+}
+
+function displayResult(result) {
+    const displayResult = document.getElementById("displayResult");
+    displayResult.innerHTML = "";
+
+    const resultContainer = document.createElement("div");
+    resultContainer.classList.add("display-content");
+
+    const title = document.createElement("h3");
+    title.textContent = "Resultado da Classificação:";
+    resultContainer.appendChild(title);
+
+    const attributes = result.attributes;
+
+    for (const key in attributes) {
+        if (attributes.hasOwnProperty(key)) {
+            const item = attributes[key];
+
+            const itemContainer = document.createElement("div");
+            itemContainer.classList.add("result-item");
+
+            const imgElement = document.createElement("img");
+            imgElement.src = `/src/api/img/${item.name}`;
+            imgElement.alt = item.name;
+            imgElement.classList.add("result-image");
+
+            const classificationElement = document.createElement("p");
+            classificationElement.textContent = `Classificado como: ${item.classified_as}`;
+
+            const scoreElement = document.createElement("p");
+            scoreElement.textContent = `Pontuação: ${item.score}`;
+
+            itemContainer.appendChild(imgElement);
+            itemContainer.appendChild(classificationElement);
+            itemContainer.appendChild(scoreElement);
+
+            resultContainer.appendChild(itemContainer);
+        }
+    }
+
+    displayResult.appendChild(resultContainer);
 }
