@@ -170,3 +170,11 @@ function hideLoading() {
     document.getElementById("loading").style.display = "none";
     document.body.style.pointerEvents = "auto";
 }
+
+function openPopup() {
+    document.getElementById("infoPopup").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("infoPopup").style.display = "none";
+}

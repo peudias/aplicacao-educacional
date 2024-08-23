@@ -21,6 +21,18 @@
 
                 <!-- Título e Botão Voltar -->
                 <div class="back-button-container">
+                    <button onclick="openPopup()" class="back-button">Info</button>
+                    <div id="infoPopup" class="popup-overlay" style="display: none">
+                        <div class="popup-content">
+                            <span class="close-button" onclick="closePopup()">&times;</span>
+                            <h2>Sobre a Aplicação</h2>
+                            <p>
+                                Esta aplicação permite que você carregue uma imagem e a classifique utilizando um modelo de aprendizado de máquina. O modelo analisará a imagem e retornará uma
+                                classificação baseada em categorias predefinidas.
+                            </p>
+                            Aqui adicionar mais informações sobre a aplicação (explicar wet, dry e resultados)
+                        </div>
+                    </div>
                     <h2 class="h2-body">Selecione a imagem desejada</h2>
                     <button onclick="goBack()" class="back-button">Voltar</button>
                 </div>
