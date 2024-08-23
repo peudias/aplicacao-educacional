@@ -51,7 +51,7 @@ app.post("/upload", upload.array("images", 3), (req, res) => {
 
     // Corrige o caminho do script Python
     const pythonScriptPath = path.normalize(path.resolve(__dirname, "..", "src", "api", "pre_load_stuff.py"));
-    const pythonCommand = `py "${pythonScriptPath}"`;
+    const pythonCommand = `python3 "${pythonScriptPath}"`;
 
     console.log("Comando Python:", pythonCommand);
 
