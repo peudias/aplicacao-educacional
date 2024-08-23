@@ -57,7 +57,7 @@ def classificadora(path, model, dir):
     else:  # Processamento de várias imagens em um diretório
         counter = 0
         for filename in os.listdir(path):
-            if filename.lower().endswith(('.jpg')):
+            if filename.lower().endswith(('.jpg')) or filename.lower().endswith(('.png')) or filename.lower().endswith(('.jpeg')):
                 img_path = os.path.join(path, filename)
                 print(f"Processando {img_path}")
 

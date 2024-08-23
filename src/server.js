@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
         cb(null, uploadDirectory);
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = crypto.randomBytes(2).toString("hex");
+        const uniqueSuffix = crypto.randomBytes(8).toString("hex");
         cb(null, `${Date.now()}${uniqueSuffix}${path.extname(file.originalname)}`);
     }
 });
