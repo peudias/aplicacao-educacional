@@ -1,3 +1,26 @@
+.custom-alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.custom-alert {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1002;
+    width: 250px;
+    text-align: center;
+    font-size: 14px;
+    transition: opacity 1s ease-out;
+}
+
 .popup-overlay {
     position: fixed;
     top: 0;

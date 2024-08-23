@@ -10,7 +10,7 @@ function handleFileInput(event) {
     const files = event.target.files;
 
     if (currentImageCount + files.length > maxImages) {
-        alert(`Você só pode carregar até ${maxImages} imagens.`);
+        showCustomAlert(`Você só pode carregar até ${maxImages} imagens.`);
         event.target.value = "";
         return;
     }
@@ -76,7 +76,7 @@ function goBack() {
 
 async function simulate() {
     if (selectedImages.length < 1) {
-        alert("Selecione pelo menos 1 imagem para classificar.");
+        showCustomAlert("Selecione pelo menos 1 imagem para classificar.");
         return;
     }
 
@@ -95,16 +95,16 @@ async function simulate() {
         });
 
         if (response.ok) {
-            alert("Imagens carregadas com sucesso!");
+            showCustomAlert("Imagens carregadas com sucesso!", "success");
             const result = await response.json();
             displayResult(result);
             resetUpload();
         } else {
-            alert("Erro ao carregar imagens!");
+            showCustomAlert("Erro ao carregar imagens.");
         }
     } catch (error) {
         console.error("Erro:", error);
-        alert("Erro ao carregar imagens?");
+        showCustomAlert("Erro ao carregar imagens.");
     } finally {
         document.getElementById("simulateButton").disabled = false;
         hideLoading();
@@ -177,4 +177,33 @@ function openPopup() {
 
 function closePopup() {
     document.getElementById("infoPopup").style.display = "none";
+}
+
+function showCustomAlert(message, type = "error") {
+    const alertBox = document.getElementById("customAlert");
+    const alertMessage = document.getElementById("customAlertMessage");
+
+    alertMessage.textContent = message;
+
+    alertBox.className = "custom-alert";
+
+    if (type === "success") {
+        alertBox.classList.add("success");
+    }
+
+    alertBox.style.display = "block";
+    alertBox.style.opacity = "1";
+
+    setTimeout(function () {
+        alertBox.style.opacity = "0";
+    }, 2000);
+
+    setTimeout(function () {
+        alertBox.style.display = "none";
+    }, 3000);
+}
+
+function closeCustomAlert() {
+    const alertBox = document.getElementById("customAlert");
+    alertBox.style.display = "none";
 }
