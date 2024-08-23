@@ -1,7 +1,17 @@
 {
     "attributes": {
         "1": {
-            "name": "17244524015999af377b0fa83684a.jpeg",
+            "name": "172445348834008fd48c26187a70a.jpeg",
+            "classified_as": "wet",
+            "score": "1.0"
+        },
+        "2": {
+            "name": "1724453488341e9b224016af41131.jpeg",
+            "classified_as": "dry",
+            "score": "0.21211962"
+        },
+        "3": {
+            "name": "1724453488342917c7e1bae9d655b.jpeg",
             "classified_as": "dry",
             "score": "4.7384074e-06"
         }
