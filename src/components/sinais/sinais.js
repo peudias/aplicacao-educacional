@@ -88,6 +88,7 @@ async function simulate() {
 
     try {
         document.getElementById("simulateButton").disabled = true;
+        showLoading();
         const response = await fetch("http://localhost:3000/upload", {
             method: "POST",
             body: formData
@@ -106,6 +107,7 @@ async function simulate() {
         alert("Erro ao carregar imagens?");
     } finally {
         document.getElementById("simulateButton").disabled = false;
+        hideLoading();
     }
 }
 
@@ -157,4 +159,14 @@ function displayResult(result) {
     }
 
     displayResult.appendChild(resultContainer);
+}
+
+function showLoading() {
+    document.getElementById("loading").style.display = "flex";
+    document.body.style.pointerEvents = "none";
+}
+
+function hideLoading() {
+    document.getElementById("loading").style.display = "none";
+    document.body.style.pointerEvents = "auto";
 }
