@@ -23,10 +23,12 @@ tf.random.set_seed(42)
 # Caminhos ajustados para /tmp
 model_path = os.path.join(os.path.dirname(__file__), 'json', 'M1_weights_epoch_90.h5')
 output_dir = '/tmp/img'  # Certifique-se de que seja o mesmo caminho usado no Node.js
-output_json_path = '/tmp/src/api/classificados.json'
+output_json_dir = '/tmp/src/api'
+output_json_path = os.path.join(output_json_dir, 'classificados.json')
 
-# Garantir que o diretório exista
+# Garantir que os diretórios existam
 os.makedirs(output_dir, exist_ok=True)
+os.makedirs(output_json_dir, exist_ok=True)
 
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"O modelo não foi encontrado: {model_path}")
@@ -108,13 +110,4 @@ def classificadora(path, model, dir):
             print(f"JSON salvo com sucesso em: {output_json_path}")
     except Exception as e:
         print(f"Erro ao salvar o arquivo JSON: {e}")
-        traceback.print_exc()
-
-if __name__ == "__main__":
-    try:
-        print(f"Início do script.")
-        print(f"Chamando a função classificadora com output_dir: {output_dir}")
-        classificadora(output_dir, model, True)
-    except Exception as e:
-        print(f"Erro detectado: {e}")
-        traceback.print_exc()
+    
