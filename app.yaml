@@ -1,5 +1,5 @@
-runtime: nodejs20
-env: standard
+runtime: custom
+env: flex
 
 handlers:
     - url: /.*
