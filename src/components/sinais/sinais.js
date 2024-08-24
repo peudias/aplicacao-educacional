@@ -140,7 +140,7 @@ function displayResult(result) {
             itemContainer.classList.add("result-item");
 
             const imgElement = document.createElement("img");
-            imgElement.src = `/src/api/img/${item.name}`;
+            imgElement.src = `/img/${item.name}`;
             imgElement.alt = item.name;
             imgElement.classList.add("result-image");
 

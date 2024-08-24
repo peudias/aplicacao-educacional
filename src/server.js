@@ -55,6 +55,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname)));
+app.use("/img", express.static(uploadDirectory));
 
 ensureUploadDirectoryExists();
 
@@ -74,6 +75,10 @@ app.post("/upload", async (req, res) => {
             if (!req.files || req.files.length === 0) {
                 return res.status(400).json({ message: "Nenhum arquivo foi carregado." });
             }
+
+            req.files.forEach(file => {
+                console.log("Caminho completo da imagem salva:", file.path);
+            });
 
             const isLocal = process.env.NODE_ENV !== "production";
             const scriptPath = path.join(__dirname, "api", "pre_load_stuff.py");
