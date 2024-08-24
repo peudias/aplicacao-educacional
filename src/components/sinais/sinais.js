@@ -89,7 +89,7 @@ async function simulate() {
     try {
         document.getElementById("simulateButton").disabled = true;
         showLoading();
-        const response = await fetch("http://localhost:3000/upload", {
+        const response = await fetch("/upload", {
             method: "POST",
             body: formData
         });
