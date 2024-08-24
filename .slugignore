@@ -1,0 +1,17 @@
+node_modules/
+
+.env
+.DS_Store
+.vscode/
+
+*.log
+
+README.md
+docs/
+
+tests/
+__tests__/
+*.test.js
+
+src/images/
+imgs/
