@@ -6,7 +6,6 @@ const fs = require("fs").promises;
 const { exec } = require("child_process");
 
 const uploadDirectory = path.join("/tmp", "img");
-//const uploadDirectory = path.join(__dirname, "api", "img");
 
 async function ensureUploadDirectoryExists() {
     try {
@@ -40,6 +39,8 @@ async function deleteOldFiles(directory) {
     }
 }
 
+const originalFileNames = {}; // Objeto para armazenar o mapeamento
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         console.log("Preparando para salvar o arquivo...");
@@ -47,7 +48,9 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = crypto.randomBytes(8).toString("hex");
-        cb(null, `${Date.now()}${uniqueSuffix}${path.extname(file.originalname)}`);
+        const generatedName = `${Date.now()}${uniqueSuffix}${path.extname(file.originalname)}`;
+        originalFileNames[generatedName] = file.originalname; // Mapeia o nome gerado para o nome original
+        cb(null, generatedName);
     }
 });
 
@@ -108,7 +111,15 @@ app.post("/upload", async (req, res) => {
                         try {
                             const jsonFilePath = path.join("/tmp/src/api", "classificados.json"); // Caminho ajustado
                             const data = await fs.readFile(jsonFilePath, "utf8");
-                            return res.status(200).json(JSON.parse(data));
+                            const result = JSON.parse(data);
+
+                            // Adiciona o nome original das imagens ao JSON resultante
+                            for (const key in result.attributes) {
+                                const item = result.attributes[key];
+                                item.original_name = originalFileNames[item.name] || item.name;
+                            }
+
+                            return res.status(200).json(result);
                         } catch (err) {
                             console.error("Erro ao ler o arquivo JSON:", err);
                             return res.status(500).json({

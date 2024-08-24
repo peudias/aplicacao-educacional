@@ -140,9 +140,14 @@ function displayResult(result, images) {
             itemContainer.classList.add("result-item");
 
             const imgElement = document.createElement("img");
-            // Substituir o caminho da imagem tratada pela imagem original do upload
-            const originalImage = images.find(img => img.file.name === item.name);
-            imgElement.src = originalImage ? originalImage.src : `/img/${item.name}`;
+            // Substituir o caminho da imagem processada pelo caminho da imagem original carregada
+            const originalImage = images.find(img => img.file.name === item.original_name);
+            if (originalImage) {
+                imgElement.src = originalImage.src; // Mostrar a imagem original carregada
+                console.log(`Exibindo imagem original para ${item.original_name}: ${imgElement.src}`);
+            } else {
+                console.warn(`Imagem original não encontrada para ${item.name}`);
+            }
             imgElement.alt = item.name;
             imgElement.classList.add("result-image");
 
