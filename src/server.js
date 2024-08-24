@@ -6,6 +6,7 @@ const fs = require("fs").promises;
 const { exec } = require("child_process");
 
 const uploadDirectory = path.join("/tmp", "img");
+//const uploadDirectory = path.join(__dirname, "api", "img");
 
 async function ensureUploadDirectoryExists() {
     try {
@@ -105,7 +106,7 @@ app.post("/upload", async (req, res) => {
                             console.warn(`Aviso no script Python com o comando ${command}: ${stderr}`);
                         }
                         try {
-                            const jsonFilePath = path.join(__dirname, "api", "json", "classificados.json");
+                            const jsonFilePath = path.join("/tmp/src/api", "classificados.json"); // Caminho ajustado
                             const data = await fs.readFile(jsonFilePath, "utf8");
                             return res.status(200).json(JSON.parse(data));
                         } catch (err) {
