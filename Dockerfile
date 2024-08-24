@@ -1,31 +1,23 @@
-FROM python:3.9-slim
+# Use uma imagem base que inclua Python 3.10.11 e Node.js
+FROM python:3.10.11-slim
 
-# Instala dependências necessárias
-RUN apt-get update && apt-get install -y \
-    python3-pip \
-    python3-venv \
-    && apt-get clean
+# Instale o Node.js
+RUN apt-get update && apt-get install -y nodejs npm
 
+# Defina o diretório de trabalho na imagem
 WORKDIR /app
 
-# Cria e ativa um ambiente virtual
-RUN python3 -m venv venv
-ENV PATH="/app/venv/bin:$PATH"
-
-# Atualiza o pip
-RUN pip install --upgrade pip
-
-# Copia o requirements.txt e instala as dependências
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-# Copia o restante da aplicação
+# Copie os arquivos do projeto para o diretório de trabalho na imagem
 COPY . .
 
-# Instala dependências do Node.js
-RUN apt-get install -y nodejs npm && npm install
+# Instale as dependências do Node.js
+RUN npm install
 
-# Exposição da porta
+# Instale as dependências do Python
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Exponha a porta da aplicação
 EXPOSE 8080
 
 # Comando para iniciar a aplicação
