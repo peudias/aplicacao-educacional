@@ -22,11 +22,18 @@ threshold = 0.877976
 np.random.seed(42)
 tf.random.set_seed(42)
 
-# Carregar o modelo
-model_path = './src/api/json/M1_weights_epoch_90.h5'
+# Caminhos ajustados para /tmp
+model_path = os.path.join(os.path.dirname(__file__), 'json', 'M1_weights_epoch_90.h5')
+output_dir = '/tmp/src/api/img'
+output_json_path = '/tmp/src/api/classificados.json'
+
+# Garantir que o diretório exista
+os.makedirs(output_dir, exist_ok=True)
+
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"O modelo não foi encontrado: {model_path}")
 
+# Carregar o modelo
 model = load_model(model_path)
 print('Modelo carregado do disco')
 
@@ -57,21 +64,21 @@ def classificadora(path, model, dir):
     else:  # Processamento de várias imagens em um diretório
         counter = 0
         for filename in os.listdir(path):
-            if filename.lower().endswith(('.jpg')) or filename.lower().endswith(('.png')) or filename.lower().endswith(('.jpeg')):
+            if filename.lower().endswith(('.jpg', '.png', '.jpeg')):
                 img_path = os.path.join(path, filename)
                 print(f"Processando {img_path}")
 
                 try:
                     with Image.open(img_path) as picture:
                         resized_pic = picture.resize((128, 128), Image.LANCZOS)
-                        resized_pic.save(img_path)
+                        resized_pic.save(os.path.join(output_dir, filename))
                 except Exception as e:
                     print(f"Erro ao redimensionar a imagem {img_path}: {e}")
                     traceback.print_exc()
                     continue
 
                 try:
-                    sample = img_to_array(load_img(path=img_path, color_mode="rgb", target_size=None))
+                    sample = img_to_array(load_img(path=os.path.join(output_dir, filename), color_mode="rgb", target_size=None))
                     processing_img = np.expand_dims(sample, axis=0)
                     processed_image = processing_img / 255.0
                     prediction = model.predict(processed_image)
@@ -88,13 +95,12 @@ def classificadora(path, model, dir):
                     print(f"Erro ao processar a previsão para a imagem {img_path}: {e}")
                     traceback.print_exc()
 
-    output_path = './src/api/json/classificados.json'
     try:
-        with open(output_path, 'w', encoding='utf-8') as filepath:
+        with open(output_json_path, 'w', encoding='utf-8') as filepath:
             json.dump(classificados, filepath, indent=4, ensure_ascii=False)
     except Exception as e:
         print(f"Erro ao salvar o arquivo JSON: {e}")
         traceback.print_exc()
 
 if __name__ == "__main__":
-    classificadora('./src/api/img/', model, True)
+    classificadora(output_dir, model, True)

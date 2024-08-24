@@ -5,8 +5,18 @@ const crypto = require("crypto");
 const fs = require("fs").promises;
 const { exec } = require("child_process");
 
-// Diretório onde as imagens serão carregadas
-const uploadDirectory = path.join(__dirname, "api", "img");
+// Diretório onde as imagens serão carregadas (use o diretório temporário /tmp no Google App Engine)
+const uploadDirectory = path.join("/tmp", "img");
+
+// Certifique-se de que o diretório existe
+async function ensureUploadDirectoryExists() {
+    try {
+        await fs.mkdir(uploadDirectory, { recursive: true });
+        console.log(`Diretório de upload criado: ${uploadDirectory}`);
+    } catch (err) {
+        console.error(`Erro ao criar o diretório de upload: ${uploadDirectory}`, err);
+    }
+}
 
 // Função para deletar arquivos antigos
 async function deleteOldFiles(directory) {
@@ -36,7 +46,6 @@ async function deleteOldFiles(directory) {
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         console.log("Preparando para salvar o arquivo...");
-        // Garantindo que o diretório de upload é correto
         cb(null, uploadDirectory);
     },
     filename: function (req, file, cb) {
@@ -50,7 +59,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname)));
-app.use("/src/api/img", express.static(uploadDirectory));
+
+// Certifique-se de que o diretório de upload está pronto
+ensureUploadDirectoryExists();
+
+//app.use("/src/api/img", express.static(uploadDirectory));
+app.use("/src/api/img", express.static(path.join(__dirname, "api/img")));
 
 app.post("/upload", async (req, res) => {
     console.log("Recebido pedido de upload.");
@@ -71,11 +85,6 @@ app.post("/upload", async (req, res) => {
                 return res.status(400).json({ message: "Nenhum arquivo foi carregado." });
             }
 
-            // Verifica o diretório de trabalho e variáveis de ambiente
-            console.log("Diretório de trabalho:", process.cwd());
-            console.log("Variáveis de ambiente:", JSON.stringify(process.env, null, 2));
-
-            // Corrige o caminho do script Python
             const pythonScriptPath = path.normalize(path.resolve(__dirname, "..", "src", "api", "pre_load_stuff.py"));
             const pythonCommand = `py "${pythonScriptPath}"`;
 
