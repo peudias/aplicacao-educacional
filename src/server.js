@@ -84,26 +84,42 @@ app.post("/upload", async (req, res) => {
 
             // Detectar se estamos em um ambiente de desenvolvimento local ou produção
             const isLocal = process.env.NODE_ENV !== "production";
-            const pythonCommand = isLocal ? `py "${path.join(__dirname, "api", "pre_load_stuff.py")}"` : `python "${path.join(__dirname, "api", "pre_load_stuff.py")}"`;
+            const scriptPath = path.join(__dirname, "api", "pre_load_stuff.py");
 
-            console.log("Comando Python:", pythonCommand);
+            // Função para tentar executar o comando Python com `py`, `python`, e `python3`
+            function runPythonScript(commands) {
+                const command = commands.shift();
+                console.log(`Tentando executar o comando: ${command}`);
 
-            exec(pythonCommand, async (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Erro ao executar o script Python: ${error.message}`);
-                    return res.status(500).json({ message: "Erro ao executar o script Python." });
-                }
+                exec(command, async (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`Erro ao executar o comando ${command}: ${error.message}`);
+                        if (commands.length > 0) {
+                            // Tentar o próximo comando se houver erro
+                            runPythonScript(commands);
+                        } else {
+                            return res.status(500).json({ message: "Erro ao executar o script Python." });
+                        }
+                    } else {
+                        if (stderr) {
+                            console.warn(`Aviso no script Python com o comando ${command}: ${stderr}`);
+                        }
+                        try {
+                            const jsonFilePath = path.join(__dirname, "api", "json", "classificados.json");
+                            const data = await fs.readFile(jsonFilePath, "utf8");
+                            return res.status(200).json(JSON.parse(data));
+                        } catch (err) {
+                            console.error("Erro ao ler o arquivo JSON:", err);
+                            return res.status(500).json({ message: "Erro ao ler o arquivo JSON." });
+                        }
+                    }
+                });
+            }
 
-                try {
-                    const jsonFilePath = path.join(__dirname, "api", "json", "classificados.json");
-                    const data = await fs.readFile(jsonFilePath, "utf8");
+            // Inicia a tentativa de execução do script Python
+            const commandsToTry = isLocal ? [`py "${scriptPath}"`, `python "${scriptPath}"`, `python3 "${scriptPath}"`] : [`python "${scriptPath}"`, `python3 "${scriptPath}"`];
 
-                    res.status(200).json(JSON.parse(data));
-                } catch (err) {
-                    console.error("Erro ao ler o arquivo JSON:", err);
-                    res.status(500).json({ message: "Erro ao ler o arquivo JSON." });
-                }
-            });
+            runPythonScript(commandsToTry);
         });
     } catch (err) {
         console.error("Erro durante o processo de upload:", err);
