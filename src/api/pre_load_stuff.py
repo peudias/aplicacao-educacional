@@ -26,9 +26,15 @@ output_dir = '/tmp/img'  # Certifique-se de que seja o mesmo caminho usado no No
 output_json_dir = '/tmp/src/api'
 output_json_path = os.path.join(output_json_dir, 'classificados.json')
 
-# Garantir que os diretórios existam
+# Garantir que o diretório exista
 os.makedirs(output_dir, exist_ok=True)
+
+# Verificação da criação do diretório JSON (NOVO)
 os.makedirs(output_json_dir, exist_ok=True)
+if os.path.exists(output_json_dir):
+    print(f"Diretório {output_json_dir} foi criado com sucesso.")
+else:
+    print(f"Falha ao criar o diretório {output_json_dir}.")
 
 if not os.path.isfile(model_path):
     raise FileNotFoundError(f"O modelo não foi encontrado: {model_path}")
@@ -105,9 +111,19 @@ def classificadora(path, model, dir):
                     traceback.print_exc()
 
     try:
+        print(f"Salvando JSON no caminho: {output_json_path}")  # Adicionar log antes de salvar JSON
         with open(output_json_path, 'w', encoding='utf-8') as filepath:
             json.dump(classificados, filepath, indent=4, ensure_ascii=False)
             print(f"JSON salvo com sucesso em: {output_json_path}")
     except Exception as e:
         print(f"Erro ao salvar o arquivo JSON: {e}")
-    
+        traceback.print_exc()
+
+if __name__ == "__main__":
+    try:
+        print(f"Início do script.")
+        print(f"Chamando a função classificadora com output_dir: {output_dir}")
+        classificadora(output_dir, model, True)
+    except Exception as e:
+        print(f"Erro detectado: {e}")
+        traceback.print_exc()
