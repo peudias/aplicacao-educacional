@@ -4,3 +4,8 @@ env: flex
 handlers:
     - url: /.*
       script: auto
+
+# Configuração para aumentar o tempo de inicialização da aplicação
+readiness_check:
+    path: "/"
+    app_start_timeout_sec: 1800
