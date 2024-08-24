@@ -63,9 +63,6 @@ app.use(express.static(path.join(__dirname)));
 // Certifique-se de que o diretório de upload está pronto
 ensureUploadDirectoryExists();
 
-//app.use("/src/api/img", express.static(uploadDirectory));
-app.use("/src/api/img", express.static(path.join(__dirname, "api/img")));
-
 app.post("/upload", async (req, res) => {
     console.log("Recebido pedido de upload.");
 
@@ -85,8 +82,9 @@ app.post("/upload", async (req, res) => {
                 return res.status(400).json({ message: "Nenhum arquivo foi carregado." });
             }
 
-            const pythonScriptPath = path.normalize(path.resolve(__dirname, "..", "src", "api", "pre_load_stuff.py"));
-            const pythonCommand = `py "${pythonScriptPath}"`;
+            // Detectar se estamos em um ambiente de desenvolvimento local ou produção
+            const isLocal = process.env.NODE_ENV !== "production";
+            const pythonCommand = isLocal ? `py "${path.join(__dirname, "api", "pre_load_stuff.py")}"` : `python "${path.join(__dirname, "api", "pre_load_stuff.py")}"`;
 
             console.log("Comando Python:", pythonCommand);
 
