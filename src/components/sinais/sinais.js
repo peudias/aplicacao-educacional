@@ -44,7 +44,7 @@ function handleFileInput(event) {
                 imgWrapper.appendChild(removeButton);
                 imgContainer.appendChild(imgWrapper);
 
-                selectedImages.push(file);
+                selectedImages.push({ file: file, src: e.target.result });
                 currentImageCount++;
 
                 if (currentImageCount >= maxImages) {
@@ -64,7 +64,7 @@ function removeImage(imageWrapper, file) {
         document.getElementById("fileInput2").disabled = false;
     }
 
-    const index = selectedImages.indexOf(file);
+    const index = selectedImages.findIndex(image => image.file === file);
     if (index > -1) {
         selectedImages.splice(index, 1);
     }
@@ -82,8 +82,8 @@ async function simulate() {
 
     const formData = new FormData();
     selectedImages.forEach((image, index) => {
-        console.log(`Adicionando imagem ${index + 1}: ${image.name}`);
-        formData.append(`images`, image);
+        console.log(`Adicionando imagem ${index + 1}: ${image.file.name}`);
+        formData.append(`images`, image.file);
     });
 
     try {
@@ -97,7 +97,7 @@ async function simulate() {
         if (response.ok) {
             showCustomAlert("Imagens carregadas com sucesso!", "success");
             const result = await response.json();
-            displayResult(result);
+            displayResult(result, selectedImages); // Passar selectedImages para displayResult
             resetUpload();
         } else {
             showCustomAlert("Erro ao carregar imagens.");
@@ -119,7 +119,7 @@ function resetUpload() {
     document.getElementById("fileInput2").disabled = false;
 }
 
-function displayResult(result) {
+function displayResult(result, images) {
     const displayResult = document.getElementById("displayResult");
     displayResult.innerHTML = "";
 
@@ -140,8 +140,9 @@ function displayResult(result) {
             itemContainer.classList.add("result-item");
 
             const imgElement = document.createElement("img");
-            imgElement.src = `/img/${item.name}`;
-            console.log("aaaaaaaaaaaaaaaaaa", imgElement.src);
+            // Substituir o caminho da imagem tratada pela imagem original do upload
+            const originalImage = images.find(img => img.file.name === item.name);
+            imgElement.src = originalImage ? originalImage.src : `/img/${item.name}`;
             imgElement.alt = item.name;
             imgElement.classList.add("result-image");
 
