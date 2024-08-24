@@ -1,14 +1,14 @@
-# Use uma imagem base que inclua Node.js
+# Use uma imagem base que inclua Node.js e uma versão compatível de Python
 FROM node:20-slim
 
-# Instale o Python e outras dependências necessárias
-RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
+# Instale Python 3.10
+RUN apt-get update && apt-get install -y python3.10 python3.10-venv python3-pip
 
 # Defina o diretório de trabalho na imagem
 WORKDIR /app
 
-# Crie um ambiente virtual
-RUN python3 -m venv venv
+# Crie um ambiente virtual com Python 3.10
+RUN python3.10 -m venv venv
 
 # Ative o ambiente virtual e instale as dependências do Python
 COPY requirements.txt .
