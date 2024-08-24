@@ -5,10 +5,8 @@ const crypto = require("crypto");
 const fs = require("fs").promises;
 const { exec } = require("child_process");
 
-// Diretório onde as imagens serão carregadas (use o diretório temporário /tmp no Google App Engine)
 const uploadDirectory = path.join("/tmp", "img");
 
-// Certifique-se de que o diretório existe
 async function ensureUploadDirectoryExists() {
     try {
         await fs.mkdir(uploadDirectory, { recursive: true });
@@ -18,7 +16,6 @@ async function ensureUploadDirectoryExists() {
     }
 }
 
-// Função para deletar arquivos antigos
 async function deleteOldFiles(directory) {
     try {
         const files = await fs.readdir(directory);
@@ -42,7 +39,6 @@ async function deleteOldFiles(directory) {
     }
 }
 
-// Configuração do multer para upload de arquivos
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         console.log("Preparando para salvar o arquivo...");
@@ -60,17 +56,14 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname)));
 
-// Certifique-se de que o diretório de upload está pronto
 ensureUploadDirectoryExists();
 
 app.post("/upload", async (req, res) => {
     console.log("Recebido pedido de upload.");
 
     try {
-        // Primeiro, deletar os arquivos antigos
         await deleteOldFiles(uploadDirectory);
 
-        // Em seguida, processar o upload
         upload.array("images", 3)(req, res, async function (err) {
             if (err) {
                 console.error("Erro no processo de upload:", err);
@@ -82,11 +75,9 @@ app.post("/upload", async (req, res) => {
                 return res.status(400).json({ message: "Nenhum arquivo foi carregado." });
             }
 
-            // Detectar se estamos em um ambiente de desenvolvimento local ou produção
             const isLocal = process.env.NODE_ENV !== "production";
             const scriptPath = path.join(__dirname, "api", "pre_load_stuff.py");
 
-            // Função para tentar executar o comando Python com `py`, `python`, e `python3`
             function runPythonScript(commands) {
                 const command = commands.shift();
                 console.log(`Tentando executar o comando: ${command}`);
@@ -95,10 +86,13 @@ app.post("/upload", async (req, res) => {
                     if (error) {
                         console.error(`Erro ao executar o comando ${command}: ${error.message}`);
                         if (commands.length > 0) {
-                            // Tentar o próximo comando se houver erro
                             runPythonScript(commands);
                         } else {
-                            return res.status(500).json({ message: "Erro ao executar o script Python." });
+                            return res.status(500).json({
+                                message: "Erro ao executar o script Python.",
+                                error: error.message,
+                                stderr: stderr
+                            });
                         }
                     } else {
                         if (stderr) {
@@ -110,20 +104,25 @@ app.post("/upload", async (req, res) => {
                             return res.status(200).json(JSON.parse(data));
                         } catch (err) {
                             console.error("Erro ao ler o arquivo JSON:", err);
-                            return res.status(500).json({ message: "Erro ao ler o arquivo JSON." });
+                            return res.status(500).json({
+                                message: "Erro ao ler o arquivo JSON.",
+                                error: err.message
+                            });
                         }
                     }
                 });
             }
 
-            // Inicia a tentativa de execução do script Python
             const commandsToTry = isLocal ? [`py "${scriptPath}"`, `python "${scriptPath}"`, `python3 "${scriptPath}"`] : [`python "${scriptPath}"`, `python3 "${scriptPath}"`];
 
             runPythonScript(commandsToTry);
         });
     } catch (err) {
         console.error("Erro durante o processo de upload:", err);
-        res.status(500).json({ message: "Erro durante o processo de upload." });
+        res.status(500).json({
+            message: "Erro durante o processo de upload.",
+            error: err.message
+        });
     }
 });
 
@@ -135,11 +134,10 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-// Middleware para lidar com erros
 app.use((err, req, res, next) => {
     if (err) {
         console.error("Erro:", err);
-        res.status(500).json({ message: "Erro no servidor." });
+        res.status(500).json({ message: "Erro no servidor.", error: err.message });
     } else {
         next();
     }
