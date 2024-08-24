@@ -141,6 +141,7 @@ function displayResult(result) {
 
             const imgElement = document.createElement("img");
             imgElement.src = `/img/${item.name}`;
+            console.log("aaaaaaaaaaaaaaaaaa", imgElement.src);
             imgElement.alt = item.name;
             imgElement.classList.add("result-image");
 

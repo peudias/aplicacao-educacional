@@ -100,6 +100,7 @@ app.post("/upload", async (req, res) => {
                             });
                         }
                     } else {
+                        console.log(`Saída do comando ${command}: ${stdout}`);
                         if (stderr) {
                             console.warn(`Aviso no script Python com o comando ${command}: ${stderr}`);
                         }

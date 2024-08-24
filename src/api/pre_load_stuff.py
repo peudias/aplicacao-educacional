@@ -6,14 +6,12 @@ from keras.models import load_model
 import os
 import json
 import traceback
-
 import sys
 import io
 
 # Definir o padrão de codificação para UTF-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
-
 
 # Definir o threshold
 threshold = 0.877976
@@ -24,7 +22,7 @@ tf.random.set_seed(42)
 
 # Caminhos ajustados para /tmp
 model_path = os.path.join(os.path.dirname(__file__), 'json', 'M1_weights_epoch_90.h5')
-output_dir = '/tmp/src/api/img'
+output_dir = '/tmp/img'  # Certifique-se de que seja o mesmo caminho usado no Node.js
 output_json_path = '/tmp/src/api/classificados.json'
 
 # Garantir que o diretório exista
@@ -41,6 +39,8 @@ print('Modelo carregado do disco')
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 def classificadora(path, model, dir):
+    print(f"Entrando na função de classificação com o diretório: {path} e o modo dir: {dir}")
+
     classificados = {'attributes': {}}
     
     if not dir:  # Processamento de uma única imagem
@@ -55,6 +55,7 @@ def classificadora(path, model, dir):
             processed_image = processing_img / 255.0
 
             prediction = model.predict(processed_image)
+            print(f"Previsão realizada: {prediction}")
             print(f"Previsão para {path}: {prediction[0][0]}")
             return [resize_output, prediction[0][0], "wet" if prediction[0][0] > threshold else "dry"]
         except Exception as e:
@@ -62,8 +63,11 @@ def classificadora(path, model, dir):
             traceback.print_exc()
     
     else:  # Processamento de várias imagens em um diretório
+        arquivos_no_diretorio = os.listdir(path)
+        print(f"Arquivos no diretório {path}: {arquivos_no_diretorio}")
+
         counter = 0
-        for filename in os.listdir(path):
+        for filename in arquivos_no_diretorio:
             if filename.lower().endswith(('.jpg', '.png', '.jpeg')):
                 img_path = os.path.join(path, filename)
                 print(f"Processando {img_path}")
@@ -71,14 +75,17 @@ def classificadora(path, model, dir):
                 try:
                     with Image.open(img_path) as picture:
                         resized_pic = picture.resize((128, 128), Image.LANCZOS)
-                        resized_pic.save(os.path.join(output_dir, filename))
+                        saved_path = os.path.join(output_dir, filename)
+                        resized_pic.save(saved_path)
+                        print(f"Imagem redimensionada salva em: {saved_path}")
+
                 except Exception as e:
                     print(f"Erro ao redimensionar a imagem {img_path}: {e}")
                     traceback.print_exc()
                     continue
 
                 try:
-                    sample = img_to_array(load_img(path=os.path.join(output_dir, filename), color_mode="rgb", target_size=None))
+                    sample = img_to_array(load_img(path=saved_path, color_mode="rgb", target_size=None))
                     processing_img = np.expand_dims(sample, axis=0)
                     processed_image = processing_img / 255.0
                     prediction = model.predict(processed_image)
@@ -98,9 +105,16 @@ def classificadora(path, model, dir):
     try:
         with open(output_json_path, 'w', encoding='utf-8') as filepath:
             json.dump(classificados, filepath, indent=4, ensure_ascii=False)
+            print(f"JSON salvo com sucesso em: {output_json_path}")
     except Exception as e:
         print(f"Erro ao salvar o arquivo JSON: {e}")
         traceback.print_exc()
 
 if __name__ == "__main__":
-    classificadora(output_dir, model, True)
+    try:
+        print(f"Início do script.")
+        print(f"Chamando a função classificadora com output_dir: {output_dir}")
+        classificadora(output_dir, model, True)
+    except Exception as e:
+        print(f"Erro detectado: {e}")
+        traceback.print_exc()
