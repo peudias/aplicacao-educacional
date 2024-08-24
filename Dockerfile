@@ -1,16 +1,14 @@
-# Use uma imagem base que inclua Python 3.10 e Node.js
-FROM python:3.10-slim-bullseye
+FROM python:3.9-slim
 
 # Instala dependências necessárias
 RUN apt-get update && apt-get install -y \
-    nodejs \
-    npm \
     python3-pip \
     python3-venv \
     && apt-get clean
 
-# Cria e ativa um ambiente virtual
 WORKDIR /app
+
+# Cria e ativa um ambiente virtual
 RUN python3 -m venv venv
 ENV PATH="/app/venv/bin:$PATH"
 
@@ -25,7 +23,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Instala dependências do Node.js
-RUN npm install
+RUN apt-get install -y nodejs npm && npm install
 
 # Exposição da porta
 EXPOSE 8080
