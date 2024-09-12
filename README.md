@@ -20,7 +20,7 @@ Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.apps
 
 <div align="justify">
 
-Este trabalho apresenta o desenvolvimento de um website educacional interativo que permite carregar e classificar imagens usando um modelo de aprendizado de máquina, utilizando tecnologias web modernas como HTML, CSS e JavaScript. Para a classificação foi utilizado a linguagem Python. 
+Este trabalho apresenta o desenvolvimento de um website educacional interativo que permite carregar e classificar imagens usando um modelo de aprendizado de máquina, utilizando tecnologias web modernas como HTML, CSS e JavaScript. Para a classificação dsa imagens foi utilizado a linguagem Python. 
 
 Destinado a estudantes e entusiastas, o site pode facilitar a visualização e compreensão dos conceitos de Sinais e Sistemas Lineares, destacando-se como uma ferramenta promissora para o ensino e aprendizado em cursos de Engenharia de Computação.
 
