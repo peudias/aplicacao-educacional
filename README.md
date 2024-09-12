@@ -28,6 +28,42 @@ Destinado a estudantes e entusiastas, o site pode facilitar a visualização e c
 
 ## Compilação e Execução
 
+### Online
+
+Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.appspot.com/) para poder testar a aplicação.
+
+### Offline
+
+### Pré-requisitos
+
+1. **Node.js**: Certifique-se de ter o Node.js instalado.
+2. **Python 3.10.11**: Certifique-se de ter o Python 3.10.11 instalado.
+
+### Passos para Executar
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/peudias/aplicacao-educacional.git
+   ```
+
+2. Acesse o diretório `/src`:
+   ```bash
+   cd .\src\
+   ```
+
+2. Instale as dependências caso não tenha a pasta `node_modules` atualizado corretamente:
+   ```bash
+   npm install
+   ```
+
+3.Inicie o servidor de desenvolvimento:
+   ```bash
+   npm start
+   ```
+
+4. O servidor estará disponível em: http://localhost:3000/
+
+
 ## Contatos 📇
 
 | Contato    | Email                                                                                                                                                                                                                                                                                   |
