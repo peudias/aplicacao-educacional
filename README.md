@@ -51,17 +51,22 @@ Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.apps
    cd .\src\
    ```
 
-2. Instale as dependências caso não tenha a pasta `node_modules` atualizado corretamente:
+3. Instale as dependências caso não tenha a pasta `node_modules` atualizado corretamente:
    ```bash
    npm install
    ```
 
-3.Inicie o servidor de desenvolvimento:
+Instale os requirements do python
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4.Inicie o servidor de desenvolvimento:
    ```bash
    npm start
    ```
 
-4. O servidor estará disponível em: http://localhost:3000/
+5. O servidor estará disponível em: http://localhost:3000/
 
 
 ## Contatos 📇
