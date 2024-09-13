@@ -56,17 +56,17 @@ Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.apps
    npm install
    ```
 
-Instale os requirements do python
+4. Instale os requirements do python
    ```bash
    pip install -r requirements.txt
    ```
 
-4.Inicie o servidor de desenvolvimento:
+5. Inicie o servidor de desenvolvimento:
    ```bash
    npm start
    ```
 
-5. O servidor estará disponível em: http://localhost:3000/
+6. O servidor estará disponível em: http://localhost:3000/
 
 
 ## Contatos 📇
