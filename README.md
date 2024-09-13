@@ -1,3 +1,5 @@
+![github-header-image (7)](https://github.com/user-attachments/assets/04eda660-b796-47ac-9232-040d03f5380c)
+
 <div align="justify">
 
 Este repositório contém os recursos associados ao artigo "Moisture Detector in Concrete Using Convolutional Neural Networks", que apresenta uma metodologia dinâmica para compreensão de circuitos elétricos.
