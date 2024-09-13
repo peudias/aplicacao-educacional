@@ -46,19 +46,19 @@ Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.apps
    git clone https://github.com/peudias/aplicacao-educacional.git
    ```
 
-2. Acesse o diretório `/src`:
+2. Instale os requirements do python
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Acesse o diretório `/src`:
    ```bash
    cd .\src\
    ```
 
-3. Instale as dependências caso não tenha a pasta `node_modules` atualizado corretamente:
+4. Instale as dependências caso não tenha a pasta `node_modules` atualizado corretamente:
    ```bash
    npm install
-   ```
-
-4. Instale os requirements do python
-   ```bash
-   pip install -r requirements.txt
    ```
 
 5. Inicie o servidor de desenvolvimento:
