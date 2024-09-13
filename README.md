@@ -32,6 +32,8 @@ Destinado a estudantes e entusiastas, o site pode facilitar a visualização e c
 
 Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.appspot.com/) para poder testar a aplicação.
 
+Acesse essa [gravação a aplicação](https://www.youtube.com/watch?v=ualiYKhDqDw) e veja seu funcionamento.
+
 ### Offline
 
 ### Pré-requisitos
@@ -67,7 +69,6 @@ Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.apps
    ```
 
 6. O servidor estará disponível em: http://localhost:3000/
-
 
 ## Contatos 📇
 
