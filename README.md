@@ -36,7 +36,9 @@ Acesse [https://sinais-433503.rj.r.appspot.com/](https://sinais-433503.rj.r.apps
 
 ### Vídeo no YouTube
 
-Acesse essa [gravação da aplicação](https://www.youtube.com/watch?v=ualiYKhDqDw) e veja seu funcionamento.
+<!-- Acesse essa [gravação da aplicação](https://www.youtube.com/watch?v=ualiYKhDqDw) e veja seu funcionamento. -->
+
+Acesse essa [gravação da aplicação](https://www.youtube.com/watch?v=EvJ792rK-nc) e veja seu funcionamento.
 
 ### Offline
 
